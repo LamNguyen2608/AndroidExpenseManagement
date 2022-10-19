@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MExpenseDemo"
         tools:targetApi="31">
         <activity
-            android:name=".NewExpense"
+            android:name=".NewExpenseFragment"
             android:exported="false" />
         <activity
             android:name=".NewTrip"

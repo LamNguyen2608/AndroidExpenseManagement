@@ -24,4 +24,7 @@ public class ExpenseViewModel extends AndroidViewModel {
 
     public LiveData<List<Expense>> getAllExpenses() {return allExpenses; }
     public static void insert(Expense expense) { repository.insert(expense); }
+    public LiveData<List<Expense>> getAllExpensesByTripId(int trip_id) { return repository.getAllExpensesByTripId(trip_id);}
+    public static void updateTrip(Expense expense) {repository.updateExpense(expense);}
+    public static void deleteTrip(Expense expense) {repository.deleteExpense(expense);}
 }

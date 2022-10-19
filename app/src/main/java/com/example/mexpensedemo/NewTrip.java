@@ -5,14 +5,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 
@@ -69,7 +66,7 @@ public class NewTrip extends AppCompatActivity {
         });
 
         btnAddExpense.setOnClickListener(view -> {
-            Intent addExpense = new Intent(this, NewExpense.class);
+            Intent addExpense = new Intent(this, NewExpenseFragment.class);
             startActivity(addExpense);
         });
 

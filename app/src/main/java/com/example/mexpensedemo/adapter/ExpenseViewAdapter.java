@@ -4,75 +4,68 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mexpensedemo.R;
+import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.Trip;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.ViewHolder> {
-    private List<Trip> listOfTrips;
+    private List<Expense> listOfExpenses;
     private Context context;
-    private OnTripClickListener tripClickListener;
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        OnTripClickListener onTripClickListener;
-        public TextView trip_name;
-        public TextView trip_date;
-        public TextView trip_destination;
-        public TextView trip_status;
 
-        public ViewHolder(@NonNull View itemView, OnTripClickListener onTripClickListener) {
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView exp_name;
+        public TextView exp_type;
+        public TextView exp_time;
+        public TextView exp_amount;
+        public TextView exp_comment;
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            trip_date = itemView.findViewById(R.id.txt_time);
-            trip_name = itemView.findViewById(R.id.txt_tripname);
-            trip_destination = itemView.findViewById(R.id.txt_destination);
-            trip_status = itemView.findViewById(R.id.txt_status);
+            exp_name = itemView.findViewById(R.id.txt_expensename);
+            exp_type = itemView.findViewById(R.id.txt_expensetype);
+            exp_time = itemView.findViewById(R.id.txt_expensetime);
+            exp_amount = itemView.findViewById(R.id.txt_expenseamt);
+            exp_comment = itemView.findViewById(R.id.txt_expensecomment);
 
-            this.onTripClickListener = onTripClickListener;
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            onTripClickListener.onTripClick(getAdapterPosition(), view);
         }
     }
 
-    public ExpenseViewAdapter(List<Trip> listOfTrips, Context context, OnTripClickListener tripClickListener) {
-        this.listOfTrips = listOfTrips;
+    public ExpenseViewAdapter(List<Expense> listOfExpenses, Context context) {
+        this.listOfExpenses = listOfExpenses;
         this.context = context;
-        this.tripClickListener = tripClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.trip_item, parent, false);
-        return new ViewHolder(view, tripClickListener);
+                .inflate(R.layout.expense_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Trip trip = Objects.requireNonNull(listOfTrips.get(position));
-        holder.trip_name.setText(trip.getTrip_name());
-        holder.trip_date.setText(trip.getDate());
-        holder.trip_destination.setText(trip.getDestination());
-        holder.trip_status.setText(trip.getStatus());
+        Expense expense = Objects.requireNonNull(listOfExpenses.get(position));
+        holder.exp_name.setText(expense.getExpense_name());
+        holder.exp_type.setText(expense.getExpense_type());
+        holder.exp_time.setText(expense.getTime());
+        holder.exp_comment.setText(expense.getComment());
+        holder.exp_amount.setText(Float.toString(expense.getAmount()));
     }
 
     @Override
     public int getItemCount() {
-        return Objects.requireNonNull(listOfTrips.size());
+        return Objects.requireNonNull(listOfExpenses.size());
     }
 
-    public interface OnTripClickListener {
-        void onTripClick(int position, View view);
-    }
 
 }
