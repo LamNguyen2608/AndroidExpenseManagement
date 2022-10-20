@@ -63,6 +63,7 @@ public class NewExpenseFragment extends AppCompatDialogFragment {
                         expense1.setExpense_name(enterExpenseName.getText().toString());
                         expense1.setTime(enterTime.getText().toString());
                         expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
+                        expense1.setComment(enterComment.getText().toString());
 
                         ExpenseViewModel.insert(expense1);
 

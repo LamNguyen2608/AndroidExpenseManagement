@@ -8,6 +8,24 @@
     tools:context=".NewExpenseFragment">
 
     <EditText
+        android:id="@+id/inp_expname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_padding"
+        android:hint="@string/expensename_hint"
+        android:inputType="textPersonName"/>
+
+    <EditText
+        android:id="@+id/inp_exptype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_padding"
+        android:ems="10"
+        android:hint="Enter type"
+        android:inputType="textPersonName"
+        android:padding="@dimen/general_padding" />
+
+    <EditText
         android:id="@+id/inp_exptime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,59 +33,7 @@
         android:ems="10"
         android:hint="Enter time"
         android:inputType="textPersonName"
-        android:padding="@dimen/general_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inp_expamt" />
-
-    <EditText
-        android:id="@+id/inp_expcmt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:layout_marginTop="156dp"
-        android:ems="10"
-        android:hint="Comment"
-        android:inputType="textPersonName"
-        android:padding="@dimen/general_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inp_exptime" />
-
-    <EditText
-        android:id="@+id/inp_expname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:layout_marginTop="96dp"
-        android:hint="@string/expensename_hint"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.064" />
-
-    <EditText
-        android:id="@+id/inp_exptype"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:hint="Enter type"
-        android:inputType="textPersonName"
-        android:padding="@dimen/general_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inp_expname"
-        app:layout_constraintVertical_bias="0.012" />
-
+        android:padding="@dimen/general_padding" />
     <EditText
         android:id="@+id/inp_expamt"
         android:layout_width="match_parent"
@@ -78,7 +44,16 @@
         android:hint="Enter amount"
         android:inputType="number"
         android:padding="@dimen/general_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inp_exptype" />
+        />
+    <EditText
+        android:id="@+id/inp_expcmt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_padding"
+        android:layout_marginTop="156dp"
+        android:ems="10"
+        android:hint="Comment"
+        android:inputType="textPersonName"
+        android:padding="@dimen/general_padding" />
+
 </LinearLayout>

@@ -32,6 +32,7 @@ public class Trip {
     private String status;
 
     public Trip() {
+        this.status = "requested";
     }
 
     public Trip(String trip_name, String destination, String date, Boolean isRisk, String description) {

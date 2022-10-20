@@ -79,6 +79,7 @@ public class ViewTripDetail extends Fragment {
         trip_isRisk = frag.findViewById(R.id.detail_isRisk);
         trip_description = frag.findViewById(R.id.detail_description);
         btn_addexpense = frag.findViewById(R.id.detail_addexpense);
+        expenseRecycler = frag.findViewById(R.id.rv_expenses);
         getParentFragmentManager().setFragmentResultListener("datafromviewall", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -92,6 +93,12 @@ public class ViewTripDetail extends Fragment {
                         trip_isRisk.setText("Yes");
                     } else {trip_isRisk.setText("No");}
 
+                });
+                expenseViewModel.getAllExpensesByTripId(trip_id).observe(getActivity(), expenses -> {
+                    Log.d("trip id==>" + trip_id, "==>" + expenses);
+                    expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                    expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
+                    expenseRecycler.setAdapter(expenseViewAdapter);
                 });
             }
         });
@@ -109,13 +116,7 @@ public class ViewTripDetail extends Fragment {
                 openDialog(trip_id);
             }
         });
-
-        expenseViewModel.getAllExpensesByTripId(trip_id).observe(getActivity(), expenses -> {
-            Log.d("trip==>", "==>" + expenses);
-            expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-            expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
-            expenseRecycler.setAdapter(expenseViewAdapter);
-        });
+        //expenseViewModel.getAllExpensesByTripId(trip_id)
         return frag;
     }
 
