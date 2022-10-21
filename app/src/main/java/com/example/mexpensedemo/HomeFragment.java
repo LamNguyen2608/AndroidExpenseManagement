@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
+import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,8 +33,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
     private AppBarConfiguration appBarConfiguration;
     //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
-    private LiveData<List<Trip>> listOfTrips;
+    private List<Trip> listOfTrips;
     private RecyclerView recentTripRecycler;
+    private RecyclerView recentExpensesRecycler;
+    private ExpenseViewModel expenseViewModel;
+    private ExpenseViewAdapter expenseViewAdapter;
     private RecyclerViewAdapter recyclerViewAdapter;
 
     public HomeFragment() {
@@ -58,25 +64,38 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
                 .getApplication())
                 .create(TripViewModel.class);
+        expenseViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
+                .getApplication())
+                .create(ExpenseViewModel.class);
 
+        recentExpensesRecycler = frag.findViewById(R.id.rv_recent_expenses);
         recentTripRecycler = frag.findViewById(R.id.rv_recent_trips);
         //recyclerView.setHasFixedSize(true);
 
         tripViewModel.getRecentTrips().observe(getActivity(), trips -> {
             Log.d("trip==>", "==>" + trips);
+            listOfTrips = trips;
             recentTripRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
             recyclerViewAdapter = new RecyclerViewAdapter(trips, getActivity(), this);
             recentTripRecycler.setAdapter(recyclerViewAdapter);
         });
+        expenseViewModel.getAllExpenses().observe(getActivity(), expenses -> {
+            Log.d("hompage expenses", "==>" + expenses);
+            recentExpensesRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
+            recentExpensesRecycler.setAdapter(expenseViewAdapter);
+        });
+
         return frag;
     }
 
     @Override
     public void onTripClick(int position, View view) {
-        Trip trip = Objects.requireNonNull(tripViewModel.allTrips.getValue().get(position));
+        Trip trip = Objects.requireNonNull(listOfTrips.get(position));
         Log.d("click position", "pst" + trip.getId());
-        Intent intent = new Intent(getActivity(), NewTrip.class);
-        intent.putExtra(TRIP_ID, trip.getId());
-        startActivity(intent);
+        Bundle result_viewall = new Bundle();
+        result_viewall.putInt(TRIP_ID, trip.getId());
+        getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_viewTripDetail);
     }
 }

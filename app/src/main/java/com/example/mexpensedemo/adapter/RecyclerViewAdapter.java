@@ -21,6 +21,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Trip> listOfTrips;
     private Context context;
     private OnTripClickListener tripClickListener;
+
+    public void setFilteredTrips(List<Trip> filteredTrips){
+        listOfTrips = filteredTrips;
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         OnTripClickListener onTripClickListener;
         public TextView trip_name;

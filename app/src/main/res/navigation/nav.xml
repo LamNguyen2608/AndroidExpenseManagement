@@ -8,7 +8,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.mexpensedemo.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_viewTripDetail"
+            app:destination="@id/viewTripDetail" />
+    </fragment>
     <fragment
         android:id="@+id/viewAllTripFragment"
         android:name="com.example.mexpensedemo.ViewAllTripFragment"

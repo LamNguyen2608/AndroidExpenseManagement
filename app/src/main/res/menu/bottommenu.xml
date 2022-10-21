@@ -12,5 +12,5 @@
     <item
         android:id="@+id/settingFragment"
         android:icon="@drawable/setting_nav_icon"
-        android:title="Settings" />
+        android:title="Sync" />
 </menu>
