@@ -2,7 +2,7 @@
 Android Development Subject
 Main Knowledge Cover:
 
-#Feature
+# Features
 - Trips: create new trip, edit trip, delete trip, view all trips, view trip detail, search by trip attributes
 - Expenses: add expense to trip, view all expenses by trip id, edit expense
 - Dashboard
