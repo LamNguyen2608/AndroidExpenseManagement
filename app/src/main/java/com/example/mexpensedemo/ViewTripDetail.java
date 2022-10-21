@@ -39,6 +39,7 @@ public class ViewTripDetail extends Fragment {
     private TextView trip_isRisk;
     private ImageView back_icon;
     private Button btn_addexpense;
+    private Button btn_edittrip;
     private int trip_id;
     private RecyclerView expenseRecycler;
     private ExpenseViewAdapter expenseViewAdapter;
@@ -80,6 +81,7 @@ public class ViewTripDetail extends Fragment {
         trip_description = frag.findViewById(R.id.detail_description);
         btn_addexpense = frag.findViewById(R.id.detail_addexpense);
         expenseRecycler = frag.findViewById(R.id.rv_expenses);
+        btn_edittrip = frag.findViewById(R.id.detail_edittrip);
         getParentFragmentManager().setFragmentResultListener("datafromviewall", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -113,16 +115,31 @@ public class ViewTripDetail extends Fragment {
         btn_addexpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog(trip_id);
+                openDialog(trip_id, "add_expense");
             }
         });
-        //expenseViewModel.getAllExpensesByTripId(trip_id)
+
+        btn_edittrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog(trip_id, "edit_trip");
+            }
+        });
+
         return frag;
     }
 
-    private void openDialog(int trip_id) {
-        NewExpenseFragment newExpense = new NewExpenseFragment(trip_id);
-        newExpense.show(getParentFragmentManager(), "add new expense");
+    private void openDialog(int trip_id, String type) {
+        switch (type){
+            case "add_expense":
+                NewExpenseFragment newExpense = new NewExpenseFragment(trip_id);
+                newExpense.show(getParentFragmentManager(), "add new expense");
+                break;
+            case "edit_trip":
+                EditTripFragment editTrip = new EditTripFragment(trip_id);
+                editTrip.show(getParentFragmentManager(), "edit this trip");
+        }
+
     }
 
 }

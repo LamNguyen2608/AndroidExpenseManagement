@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_viewAllTripFragment_to_viewTripDetail"
             app:destination="@id/viewTripDetail" />
+        <action
+            android:id="@+id/action_viewAllTripFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <activity
         android:id="@+id/newTrip2"
@@ -36,5 +39,8 @@
             android:id="@+id/action_viewTripDetail_to_viewAllTripFragment"
             app:destination="@id/viewAllTripFragment"
            />
+        <action
+            android:id="@+id/action_viewTripDetail_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
