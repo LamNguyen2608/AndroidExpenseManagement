@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mexpensedemo.NewExpenseFragment;
 import com.example.mexpensedemo.R;
 import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.Trip;
@@ -21,12 +24,15 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
     private List<Expense> listOfExpenses;
     private Context context;
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView exp_name;
         public TextView exp_type;
         public TextView exp_time;
         public TextView exp_amount;
         public TextView exp_comment;
+        public Button btn_edit;
+        public Button btn_delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -35,7 +41,28 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
             exp_time = itemView.findViewById(R.id.txt_expensetime);
             exp_amount = itemView.findViewById(R.id.txt_expenseamt);
             exp_comment = itemView.findViewById(R.id.txt_expensecomment);
+            btn_delete = itemView.findViewById(R.id.expense_delete);
+            btn_edit = itemView.findViewById(R.id.expense_edit);
 
+            btn_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Expense expense = listOfExpenses.get(getAdapterPosition());
+                    FragmentActivity fm = (FragmentActivity) view.getContext();
+                    NewExpenseFragment editExpense = new NewExpenseFragment(expense, "edit_expense");
+                    editExpense.show(fm.getSupportFragmentManager(), "edit expense" );
+                }
+            });
+
+            btn_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Expense expense = listOfExpenses.get(getAdapterPosition());
+                    FragmentActivity fm = (FragmentActivity) view.getContext();
+                    NewExpenseFragment deleteExpense = new NewExpenseFragment(expense, "delete_expense");
+                    deleteExpense.show(fm.getSupportFragmentManager(), "delete expense" );
+                }
+            });
         }
     }
 
@@ -54,7 +81,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Expense expense = Objects.requireNonNull(listOfExpenses.get(position));
+        Expense expense = Objects.requireNonNull(listOfExpenses.get(holder.getAdapterPosition()));
         holder.exp_name.setText(expense.getExpense_name());
         holder.exp_type.setText(expense.getExpense_type());
         holder.exp_time.setText(expense.getTime());

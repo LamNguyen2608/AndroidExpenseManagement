@@ -16,7 +16,7 @@ import com.example.mexpensedemo.model.Trip;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Trip.class, Expense.class}, version = 6, exportSchema = false)
+@Database(entities = {Trip.class, Expense.class}, version = 7, exportSchema = false)
 public abstract class TripRoomDatabase extends RoomDatabase {
 
     public abstract TripDAO tripDao();

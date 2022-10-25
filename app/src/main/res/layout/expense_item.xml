@@ -21,7 +21,7 @@
                         <com.google.android.material.imageview.ShapeableImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/travel_icon"
+                            android:background="@drawable/dollar_icon"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
 
@@ -113,6 +113,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1" />
                         <android.widget.Button
+                            android:id="@+id/expense_edit"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"
@@ -127,6 +128,7 @@
                             android:textColor="@color/darkerpink"
                             />
                         <android.widget.Button
+                            android:id="@+id/expense_delete"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginTop="15dp"

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,10 +41,12 @@ public class ViewTripDetail extends Fragment {
     private ImageView back_icon;
     private Button btn_addexpense;
     private Button btn_edittrip;
+    private Button btn_deletetrip;
     private int trip_id;
     private RecyclerView expenseRecycler;
     private ExpenseViewAdapter expenseViewAdapter;
     private LiveData<List<Expense>> listOfExpenses;
+    private NavHostFragment navHostFragment;
     public static ViewTripDetail newInstance() {
         ViewTripDetail fragment = new ViewTripDetail();
         return fragment;
@@ -82,19 +85,28 @@ public class ViewTripDetail extends Fragment {
         btn_addexpense = frag.findViewById(R.id.detail_addexpense);
         expenseRecycler = frag.findViewById(R.id.rv_expenses);
         btn_edittrip = frag.findViewById(R.id.detail_edittrip);
+        btn_deletetrip = frag.findViewById(R.id.detail_deletetrip);
         getParentFragmentManager().setFragmentResultListener("datafromviewall", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 trip_id = result.getInt(ViewAllTripFragment.TRIP_ID);
                 tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
-                    trip_name.setText(trip.getTrip_name());
-                    trip_destination.setText(trip.getDestination());
-                    trip_date.setText(trip.getDate());
-                    trip_description.setText(trip.getDescription());
-                    if (trip.getRisk() == true){
-                        trip_isRisk.setText("Yes");
-                    } else {trip_isRisk.setText("No");}
-
+                    if (trip != null) {
+                        trip_name.setText(trip.getTrip_name());
+                        trip_destination.setText(trip.getDestination());
+                        trip_date.setText(trip.getDate());
+                        trip_description.setText(trip.getDescription());
+                        if (trip.getRisk() == true) {
+                            trip_isRisk.setText("Yes");
+                        } else {
+                            trip_isRisk.setText("No");
+                        }
+                    }
+                    else {
+//                        navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.frag_container);
+//                        navHostFragment.getNavController().navigate(R.id.action_viewTripDetail_to_viewAllTripFragment);
+                          Navigation.findNavController(frag).navigate(R.id.action_viewTripDetail_to_viewAllTripFragment);
+                    }
                 });
                 expenseViewModel.getAllExpensesByTripId(trip_id).observe(getActivity(), expenses -> {
                     Log.d("trip id==>" + trip_id, "==>" + expenses);
@@ -109,7 +121,7 @@ public class ViewTripDetail extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("click detail back", "clicked");
-                Navigation.findNavController(frag).navigate(R.id.action_viewTripDetail_to_viewAllTripFragment);
+                Navigation.findNavController(frag).navigateUp();
             }
         });
         btn_addexpense.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +138,13 @@ public class ViewTripDetail extends Fragment {
             }
         });
 
+        btn_deletetrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog(trip_id, "delete_trip");
+            }
+        });
+
         return frag;
     }
 
@@ -136,8 +155,13 @@ public class ViewTripDetail extends Fragment {
                 newExpense.show(getParentFragmentManager(), "add new expense");
                 break;
             case "edit_trip":
-                EditTripFragment editTrip = new EditTripFragment(trip_id);
+                EditTripFragment editTrip = new EditTripFragment(trip_id, true);
                 editTrip.show(getParentFragmentManager(), "edit this trip");
+                break;
+            case "delete_trip":
+                EditTripFragment deleteTrip = new EditTripFragment(trip_id, false);
+                deleteTrip.show(getParentFragmentManager(), "delete this trip");
+                break;
         }
 
     }

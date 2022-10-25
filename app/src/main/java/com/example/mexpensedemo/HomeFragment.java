@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
@@ -59,6 +60,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
                              Bundle savedInstanceState) {
         ImageView goback_icon = getActivity().findViewById(R.id.btn_back);
         goback_icon.setVisibility(View.GONE);
+        ImageView ham_menu = getActivity().findViewById(R.id.ham_menu);
+        ham_menu.setVisibility(View.VISIBLE);
+        TextView heading = getActivity().findViewById(R.id.txt_heading);
+        heading.setText("Expense Management");
         // Inflate the layout for this fragment
         View frag = inflater.inflate(R.layout.fragment_home, container, false);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()

@@ -1,12 +1,14 @@
 package com.example.mexpensedemo.model;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {@ForeignKey(entity = Trip.class,
+@Entity(foreignKeys = {@ForeignKey(onDelete = CASCADE,entity = Trip.class,
         parentColumns = "trip_id",
         childColumns = "trip_id")
 }, tableName = "Expenses")

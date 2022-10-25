@@ -10,9 +10,11 @@ import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -42,12 +44,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity{
+    protected NavController navController;
     private DrawerLayout drawerLayout;
     private ImageView ham_menu;
 
@@ -69,7 +73,17 @@ public class MainActivity extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.togglemenu);
         BottomNavigationView bottomMenu = findViewById(R.id.bottomMenu);
 
-        NavController navController;
+        bottomMenu.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.homeFragment:
+                        navController.navigate(R.id.homeFragment);
+                }
+            }
+        });
+
+
         NavHostFragment navHostFragment;
 
         navigationView.setItemIconTintList(null);
@@ -81,5 +95,4 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(bottomMenu, navController);
 
     }
-
 }
