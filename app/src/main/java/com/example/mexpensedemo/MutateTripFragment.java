@@ -23,7 +23,7 @@ import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 
-public class EditTripFragment extends AppCompatDialogFragment {
+public class MutateTripFragment extends AppCompatDialogFragment {
 
     private EditText enterTripName;
     private EditText enterDestination;
@@ -33,9 +33,15 @@ public class EditTripFragment extends AppCompatDialogFragment {
     private int trip_id;
     private boolean isEdit;
     private TripViewModel tripViewModel;
+    private Trip deleteTrip;
 
-    public EditTripFragment(int trip_id, boolean isEdit) {
+    public MutateTripFragment(int trip_id, boolean isEdit) {
         this.trip_id = trip_id;
+        this.isEdit = isEdit;
+    }
+
+    public MutateTripFragment(Trip deletetrip, boolean isEdit) {
+        this.deleteTrip = deletetrip;
         this.isEdit = isEdit;
     }
 
@@ -89,20 +95,8 @@ public class EditTripFragment extends AppCompatDialogFragment {
                     .setPositiveButton("delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Trip trip = new Trip();
-                            trip.setId(trip_id);
-                            trip.setTrip_name(enterTripName.getText().toString());
-                            trip.setDestination(enterDestination.getText().toString());
-                            trip.setDate(enterDate.getText().toString());
-                            trip.setDescription(enterDesc.getText().toString());
-                            if (isRisk.isChecked()) {
-                                trip.setRisk(true);
-                            }
-                            else {
-                                trip.setRisk(false);
-                            }
                             try {
-                                TripViewModel.deleteTrip(trip);
+                                TripViewModel.deleteTrip(deleteTrip);
                                 Toast.makeText(getActivity(),"Delete Successfully!", Toast.LENGTH_SHORT).show();
                             } catch (Throwable error) {
                                 Toast.makeText(getActivity(),"Error from back-end!", Toast.LENGTH_SHORT).show();
@@ -121,12 +115,9 @@ public class EditTripFragment extends AppCompatDialogFragment {
                 .getApplication())
                 .create(TripViewModel.class);
 
-        tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
-            Log.d("edit trip" + trip_id, "===>:" + trip);
-            if (trip == null) {
-                dismiss();
-            }
-            else {
+        if (isEdit == true) {
+            tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
+                Log.d("edit trip" + trip_id, "===>:" + trip);
                 enterTripName.setText(trip.getTrip_name());
                 enterDestination.setText(trip.getDestination());
                 enterDate.setText(trip.getDate());
@@ -134,16 +125,27 @@ public class EditTripFragment extends AppCompatDialogFragment {
                 if (trip.getRisk() == true) {
                     isRisk.setChecked(true);
                 }
-
-                if (isEdit == false) {
-                    enterTripName.setEnabled(false);
-                    enterDate.setEnabled(false);
-                    enterDesc.setEnabled(false);
-                    enterDestination.setEnabled(false);
-                    isRisk.setEnabled(false);
+            });
+        } else {
+            tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
+                if (trip == null) {dismiss();}
+                else{
+                    deleteTrip = trip;
+                    enterTripName.setText(deleteTrip.getTrip_name());
+                    enterDestination.setText(deleteTrip.getDestination());
+                    enterDate.setText(deleteTrip.getDate());
+                    enterDesc.setText(deleteTrip.getDescription());
+                    if (deleteTrip.getRisk() == true) {
+                        isRisk.setChecked(true);
+                    }
                 }
-            }
-        });
+            });
+            enterTripName.setEnabled(false);
+            enterDate.setEnabled(false);
+            enterDesc.setEnabled(false);
+            enterDestination.setEnabled(false);
+            isRisk.setEnabled(false);
+        }
 
         return builder.create();
     }

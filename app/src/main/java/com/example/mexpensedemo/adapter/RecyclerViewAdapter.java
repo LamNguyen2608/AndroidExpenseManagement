@@ -1,18 +1,20 @@
 package com.example.mexpensedemo.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mexpensedemo.MutateTripFragment;
 import com.example.mexpensedemo.R;
 import com.example.mexpensedemo.model.Trip;
+import com.example.mexpensedemo.model.TripViewModel;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Trip> listOfTrips;
     private Context context;
     private OnTripClickListener tripClickListener;
+    private TripViewModel tripViewModel;
 
     public void setFilteredTrips(List<Trip> filteredTrips){
         listOfTrips = filteredTrips;
@@ -32,6 +35,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView trip_date;
         public TextView trip_destination;
         public TextView trip_status;
+        public TextView total_expense;
+        public Button btn_delete;
 
         public ViewHolder(@NonNull View itemView, OnTripClickListener onTripClickListener) {
             super(itemView);
@@ -39,6 +44,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             trip_name = itemView.findViewById(R.id.txt_tripname);
             trip_destination = itemView.findViewById(R.id.txt_destination);
             trip_status = itemView.findViewById(R.id.txt_status);
+            btn_delete = itemView.findViewById(R.id.tripitem_deletetrip);
+            total_expense = itemView.findViewById(R.id.txt_trip_total);
+
+            btn_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Trip trip = listOfTrips.get(getAdapterPosition());
+                    FragmentActivity fm = (FragmentActivity) view.getContext();
+                    MutateTripFragment deleteTrip = new MutateTripFragment(trip, false);
+                    deleteTrip.show(fm.getSupportFragmentManager(), "delete trip" );
+                }
+            });
 
             this.onTripClickListener = onTripClickListener;
             itemView.setOnClickListener(this);

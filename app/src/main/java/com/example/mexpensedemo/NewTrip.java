@@ -66,7 +66,7 @@ public class NewTrip extends AppCompatActivity {
         });
 
         btnAddExpense.setOnClickListener(view -> {
-            Intent addExpense = new Intent(this, NewExpenseFragment.class);
+            Intent addExpense = new Intent(this, MutateExpenseFragment.class);
             startActivity(addExpense);
         });
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,10 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
-import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
 import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.ExpenseViewModel;
-import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 
 import java.util.List;
@@ -47,6 +46,7 @@ public class ViewTripDetail extends Fragment {
     private ExpenseViewAdapter expenseViewAdapter;
     private LiveData<List<Expense>> listOfExpenses;
     private NavHostFragment navHostFragment;
+    private NavController navController;
     public static ViewTripDetail newInstance() {
         ViewTripDetail fragment = new ViewTripDetail();
         return fragment;
@@ -103,9 +103,7 @@ public class ViewTripDetail extends Fragment {
                         }
                     }
                     else {
-//                        navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.frag_container);
-//                        navHostFragment.getNavController().navigate(R.id.action_viewTripDetail_to_viewAllTripFragment);
-                          Navigation.findNavController(frag).navigate(R.id.action_viewTripDetail_to_viewAllTripFragment);
+                        ((MainActivity) getActivity()).NavigateToFragment(new ViewAllTripFragment());
                     }
                 });
                 expenseViewModel.getAllExpensesByTripId(trip_id).observe(getActivity(), expenses -> {
@@ -151,15 +149,15 @@ public class ViewTripDetail extends Fragment {
     private void openDialog(int trip_id, String type) {
         switch (type){
             case "add_expense":
-                NewExpenseFragment newExpense = new NewExpenseFragment(trip_id);
+                MutateExpenseFragment newExpense = new MutateExpenseFragment(trip_id);
                 newExpense.show(getParentFragmentManager(), "add new expense");
                 break;
             case "edit_trip":
-                EditTripFragment editTrip = new EditTripFragment(trip_id, true);
+                MutateTripFragment editTrip = new MutateTripFragment(trip_id, true);
                 editTrip.show(getParentFragmentManager(), "edit this trip");
                 break;
             case "delete_trip":
-                EditTripFragment deleteTrip = new EditTripFragment(trip_id, false);
+                MutateTripFragment deleteTrip = new MutateTripFragment(trip_id, false);
                 deleteTrip.show(getParentFragmentManager(), "delete this trip");
                 break;
         }

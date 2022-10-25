@@ -35,4 +35,7 @@ public interface TripDAO {
 
     @Delete
     void delete(Trip trip);
+
+    @Query("SELECT SUM(Expenses.amount) FROM Trips LEFT JOIN Expenses ON Trips.trip_id = Expenses.trip_id WHERE Trips.trip_id = :trip_id")
+    Float getSumOfExpenseByTripId (int trip_id);
 }

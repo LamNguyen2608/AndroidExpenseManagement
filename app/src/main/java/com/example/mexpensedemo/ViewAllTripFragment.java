@@ -45,7 +45,7 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SearchView searchTrip;
-    private String searchAttr;
+    private String searchAttr = "name";
     String[] tripAttrs = {"Name","Date", "Destination", "Status"};
     AutoCompleteTextView textOptionsTripAttr;
     ArrayAdapter<String> arrayAdapterTripAttr;
@@ -133,7 +133,7 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
         Bundle result_viewall = new Bundle();
         result_viewall.putInt(TRIP_ID, trip.getId());
         getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
-        Navigation.findNavController(view).navigate(R.id.action_viewAllTripFragment_to_viewTripDetail);
+        ((MainActivity)getActivity()).NavigateToFragment(new ViewTripDetail());
     }
 
     private void filterList(String textString) {
@@ -166,9 +166,12 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
                         filterTrips.add(trip);
                     }
                 }
+                break;
         }
 
         if (filterTrips.isEmpty()){
+            filterTrips.clear();
+            recyclerViewAdapter.setFilteredTrips(filterTrips);
             Toast.makeText(getActivity(),"No trip found!!", Toast.LENGTH_SHORT).show();
         } else {
             recyclerViewAdapter.setFilteredTrips(filterTrips);

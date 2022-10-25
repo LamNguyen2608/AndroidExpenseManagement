@@ -34,10 +34,13 @@ public class TripRepository {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> tripDao.update(trip));
     }
 
-    public void deleteTrip(Trip trip){
+    public void deleteTrip(Trip trip) {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> tripDao.delete(trip));
     }
 
     public LiveData<List<Trip>>  getRecentTrips(){ return recentTrips; }
 
+    public Float getSum(int trip_id){
+        return tripDao.getSumOfExpenseByTripId(trip_id);
+    }
 }

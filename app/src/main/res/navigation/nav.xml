@@ -45,7 +45,7 @@
     </fragment>
     <dialog
         android:id="@+id/editTripFragment"
-        android:name="com.example.mexpensedemo.EditTripFragment"
+        android:name="com.example.mexpensedemo.MutateTripFragment"
         android:label="fragment_edit_trip"
         tools:layout="@layout/fragment_edit_trip" >
         <action

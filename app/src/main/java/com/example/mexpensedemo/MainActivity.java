@@ -1,7 +1,6 @@
 package com.example.mexpensedemo;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,6 +21,7 @@ import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeFragment:
-                        navController.navigate(R.id.homeFragment);
+                        NavigateToFragment(new HomeFragment());
                 }
             }
         });
@@ -94,5 +94,12 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupWithNavController(bottomMenu, navController);
 
+    }
+    public void NavigateBack() {
+        navController.navigateUp();
+    }
+
+    public void NavigateToFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, fragment).addToBackStack(null).commit();
     }
 }

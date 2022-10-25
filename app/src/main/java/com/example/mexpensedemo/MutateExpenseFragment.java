@@ -19,7 +19,7 @@ import android.widget.EditText;
 import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.ExpenseViewModel;
 
-public class NewExpenseFragment extends AppCompatDialogFragment {
+public class MutateExpenseFragment extends AppCompatDialogFragment {
 
     private ExpenseViewModel expenseViewModel;
     private EditText enterExpenseName;
@@ -31,11 +31,11 @@ public class NewExpenseFragment extends AppCompatDialogFragment {
     private String mutate = "";
     private int trip_id;
 
-    public NewExpenseFragment(int trip_id) {
+    public MutateExpenseFragment(int trip_id) {
         this.trip_id = trip_id;
     }
 
-    public NewExpenseFragment(Expense expense, String mutate){
+    public MutateExpenseFragment(Expense expense, String mutate){
         this.expense = expense;
         this.mutate = mutate;
     }

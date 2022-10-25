@@ -29,6 +29,6 @@ public class TripViewModel extends AndroidViewModel {
     public LiveData<Trip> getTrip(int id) { return repository.getTrip(id);}
     public static void updateTrip(Trip trip) {repository.updateTrip(trip);}
     public static void deleteTrip(Trip trip) {repository.deleteTrip(trip);}
-
+    public Float getTripSum(int trip_id) {return repository.getSum(trip_id);}
 
 }

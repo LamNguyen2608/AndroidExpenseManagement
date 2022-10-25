@@ -5,17 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mexpensedemo.NewExpenseFragment;
+import com.example.mexpensedemo.MutateExpenseFragment;
 import com.example.mexpensedemo.R;
 import com.example.mexpensedemo.model.Expense;
-import com.example.mexpensedemo.model.Trip;
 
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +47,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
                 public void onClick(View view) {
                     Expense expense = listOfExpenses.get(getAdapterPosition());
                     FragmentActivity fm = (FragmentActivity) view.getContext();
-                    NewExpenseFragment editExpense = new NewExpenseFragment(expense, "edit_expense");
+                    MutateExpenseFragment editExpense = new MutateExpenseFragment(expense, "edit_expense");
                     editExpense.show(fm.getSupportFragmentManager(), "edit expense" );
                 }
             });
@@ -59,7 +57,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
                 public void onClick(View view) {
                     Expense expense = listOfExpenses.get(getAdapterPosition());
                     FragmentActivity fm = (FragmentActivity) view.getContext();
-                    NewExpenseFragment deleteExpense = new NewExpenseFragment(expense, "delete_expense");
+                    MutateExpenseFragment deleteExpense = new MutateExpenseFragment(expense, "delete_expense");
                     deleteExpense.show(fm.getSupportFragmentManager(), "delete expense" );
                 }
             });
