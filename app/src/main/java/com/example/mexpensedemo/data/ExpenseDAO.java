@@ -21,10 +21,10 @@ public interface ExpenseDAO {
     @Query("DELETE FROM Expenses")
     void deleteAll();
 
-    @Query("SELECT * FROM Expenses")
+    @Query("SELECT * FROM Expenses WHERE Expenses.isDelete = 0")
     LiveData<List<Expense>> getAllExpenses();
 
-    @Query("SELECT * FROM Expenses WHERE Expenses.trip_id = :trip_id")
+    @Query("SELECT * FROM Expenses WHERE Expenses.trip_id = :trip_id AND Expenses.isDelete = 0")
     LiveData<List<Expense>> getAllExpensesByTripId(int trip_id);
 
     @Update
@@ -32,4 +32,7 @@ public interface ExpenseDAO {
 
     @Delete
     void delete(Expense expense);
+
+    @Query("UPDATE Expenses SET isDelete = 1 WHERE Expenses.expense_id = :expense_id")
+    void softDelete(int expense_id);
 }

@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity{
         navigationView.getMenu().findItem(R.id.menu_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                mauth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-                mauth.signOut();
                 return true;
             }
         });

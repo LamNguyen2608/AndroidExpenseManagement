@@ -4,7 +4,6 @@
     <style name="formStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginTop">24dp</item>
         <item name="android:ems">10</item>
         <item name="android:inputType">textPersonName</item>
         <item name="android:padding">@dimen/general_padding</item>

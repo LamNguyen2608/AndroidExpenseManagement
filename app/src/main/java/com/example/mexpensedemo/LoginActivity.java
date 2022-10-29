@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                                             SharedPreferences pref = getApplicationContext().getSharedPreferences("AuthState", Activity.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = pref.edit();
                                             editor.putString("currentUserId", userId);
+                                            editor.putString("currentRole", userInfo.get("role").toString());
                                             editor.commit();
                                             if (userInfo.get("role").equals("user")) {
                                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));

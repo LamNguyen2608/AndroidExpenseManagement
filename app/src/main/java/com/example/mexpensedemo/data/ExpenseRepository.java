@@ -27,16 +27,14 @@ public class ExpenseRepository {
             expenseDao.insert(expense);
         });
     }
-
     public LiveData<List<Expense>> getAllExpensesByTripId(int trip_id) {
         return expenseDao.getAllExpensesByTripId(trip_id);
     }
-
     public void updateExpense(Expense expense){
         TripRoomDatabase.databaseWriteExecutor.execute(() -> expenseDao.update(expense));
     }
-
     public void deleteExpense(Expense expense){
         TripRoomDatabase.databaseWriteExecutor.execute(() -> expenseDao.delete(expense));
     }
+    public void softDelete(int expense_id) {expenseDao.softDelete(expense_id);}
 }

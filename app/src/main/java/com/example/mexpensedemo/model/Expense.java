@@ -32,20 +32,24 @@ public class Expense {
     private String time;
 
     @NonNull
+    private String date;
+
+    private String image_uri;
+
+    @NonNull
     private float amount;
 
     private String comment;
 
+    private Boolean isDelete;
+
+    private String action;
+
     public Expense() {
+        isDelete = false;
+        action = "R";
     }
 
-    public Expense(int trip_id, @NonNull String expense_name, @NonNull String expense_type, @NonNull String time, float amount) {
-        this.trip_id = trip_id;
-        this.expense_name = expense_name;
-        this.expense_type = expense_type;
-        this.time = time;
-        this.amount = amount;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -54,7 +58,6 @@ public class Expense {
     public void setTrip_id(int trip_id) {
         this.trip_id = trip_id;
     }
-
 
     public void setExpense_type(@NonNull String expense_type) {
         this.expense_type = expense_type;
@@ -107,5 +110,38 @@ public class Expense {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    @NonNull
+    public String getDate() {
+        return date;
+    }
+
+    public String getImage_uri() {
+        return image_uri;
+    }
+
+    public void setDate(@NonNull String date) {
+        this.date = date;
+    }
+
+    public void setImage_uri(String image_uri) {
+        this.image_uri = image_uri;
     }
 }

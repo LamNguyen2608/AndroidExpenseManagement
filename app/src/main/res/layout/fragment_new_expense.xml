@@ -1,59 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MutateExpenseFragment">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Expense name"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
     <EditText
         android:id="@+id/inp_expname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:hint="@string/expensename_hint"
-        android:inputType="textPersonName"/>
+        style="@style/formStyle"
+        android:layout_height="48dp"
+        android:layout_width="370dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:hint="Enter expense name"
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
+        android:importantForAutofill="no" />
 
-    <EditText
-        android:id="@+id/inp_exptype"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:ems="10"
-        android:hint="Enter type"
-        android:inputType="textPersonName"
-        android:padding="@dimen/general_padding" />
+        android:layout_marginTop="20dp"
+        android:text="Expense type"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="365dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="28dp"
+        android:hint="Type of Expense"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <AutoCompleteTextView
+            android:id="@+id/dropdown_expense_type_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/inp_exptime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/general_padding"
-        android:ems="10"
-        android:hint="Enter time"
-        android:inputType="textPersonName"
-        android:padding="@dimen/general_padding" />
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/date_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_calendar_today_24"
+                android:layout_marginStart="15dp"></ImageView>
+            <TextView
+                android:id="@+id/date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select a Date"
+                android:textColor='#29003D'
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/geomanist"
+                ></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/time_expense_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_access_time_24"
+                android:layout_marginStart="15dp"/>
+            <TextView
+                android:id="@+id/time_expense_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Time"
+                android:textColor='#29003D'
+                android:fontFamily="@font/geomanist"
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Expense amount"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        />
     <EditText
         android:id="@+id/inp_expamt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/btn_margin"
+        style="@style/formStyle"
+        android:layout_height="48dp"
+        android:layout_width="370dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
+        android:layout_gravity="center_horizontal"
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
+        android:importantForAutofill="no"
+        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
         android:hint="Enter amount"
         android:inputType="number"
         android:padding="@dimen/general_padding"
         />
-    <EditText
-        android:id="@+id/inp_expcmt"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Expense comment"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
+    <EditText
+        android:id="@+id/inp_expcmt"
+        style="@style/formStyle"
+        android:layout_height="48dp"
+        android:layout_width="370dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
+        android:importantForAutofill="no"
         android:layout_margin="@dimen/general_padding"
-        android:layout_marginTop="156dp"
         android:ems="10"
         android:hint="Comment"
         android:inputType="textPersonName"
         android:padding="@dimen/general_padding" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Expense image"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/camera_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_camera_alt_24"
+                android:layout_marginStart="15dp"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Use camera"
+                android:textColor='#29003D'
+                android:textSize="16sp"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/geomanist"
+                ></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/gallery_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_image_24"
+                android:layout_marginStart="15dp"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Use gallery"
+                android:textColor='#29003D'
+                android:textSize="16sp"
+                android:fontFamily="@font/geomanist"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/progress_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/expense_image"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_gravity="center"
+            android:src="@drawable/image_view"></ImageView>
+    </FrameLayout>
+
+
+
 
 </LinearLayout>
+</ScrollView>

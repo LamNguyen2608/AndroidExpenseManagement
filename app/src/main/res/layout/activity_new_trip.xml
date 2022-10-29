@@ -1,134 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".NewTrip">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/hysteria"
+        android:gravity="center"
+        android:text="@string/newtrip_header"
+        android:textSize="55sp"
+        android:textColor="#29003D "
+        app:autoSizeMaxTextSize="60dp"
+        app:autoSizeMinTextSize="30dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Trip name"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
 
     <EditText
         android:id="@+id/enter_tripname"
         style="@style/formStyle"
         android:layout_height="48dp"
+        android:layout_width="370dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
         android:hint="@string/trip_name_hint"
-        android:importantForAutofill="no"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="TextContrastCheck" />
-
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
+        android:importantForAutofill="no" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Destination"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/geomanist"
+        android:layout_marginLeft="28dp"
+        ></TextView>
     <EditText
         android:id="@+id/enter_destination"
         style="@style/formStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="@string/destination"
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_tripname"
-        tools:ignore="TextContrastCheck" />
-
-    <EditText
-        android:id="@+id/enter_date"
-        style="@style/formStyle"
-        android:layout_width="0dp"
+        android:minHeight="48dp" />
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/tripdate_hint"
-        android:importantForAutofill="no"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_destination"
-        tools:ignore="TextContrastCheck" />
-
+        android:layout_marginTop="15dp"
+        android:text="Description"
+        android:textColor="#593da4"
+        android:textSize="19sp"
+        android:fontFamily="@font/geomanist"
+        android:textStyle="bold"
+        android:layout_marginLeft="28dp"
+        ></TextView>
     <EditText
-        android:id="@+id/enter_desc"
+        android:id="@+id/enter_description"
         style="@style/formStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="@string/desc_hint"
+        android:textColorHint="#AFAFAF"
+        android:background="@drawable/edittextshape"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_date"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+        android:minHeight="48dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/annie_use_your_telescope"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/date_button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/edittextshape"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            android:layout_marginStart="15dp"></ImageView>
+        <TextView
+            android:id="@+id/date_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select a Date"
+            android:textColor='#29003D'
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/geomanist"
+            ></TextView>
+
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/time_button"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/edittextshape"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_access_time_24"
+                android:layout_marginStart="15dp"></ImageView>
+            <TextView
+                android:id="@+id/time_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Time"
+                android:textColor='#29003D'
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"
+
+                ></TextView>
+        </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="center"
-        android:text="@string/newtrip_header"
-        android:textSize="45sp"
-        app:autoSizeMaxTextSize="60dp"
-        app:autoSizeMinTextSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This trip has risk assessment"
+            android:textColor='#29003D'
+            android:textSize="16sp"
+            android:fontFamily="@font/geomanist"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            ></TextView>
+        <Switch
+            android:id="@+id/risk_assess"
+            android:layout_width="70dp"
+            android:layout_height="70dp"></Switch>
+    </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_save"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_save_shape"
         android:layout_margin="@dimen/btn_margin"
         android:layout_marginTop="24dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:padding="@dimen/general_padding"
         android:text="@string/save_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_desc" />
+/>
 
-    <CheckBox
-        android:id="@+id/check_isRisk"
-        style="@style/formStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/isRisk"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/enter_date"
-        app:layout_constraintTop_toBottomOf="@+id/enter_destination" />
 
-    <Button
-        android:id="@+id/btn_addexpense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Add expense"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_save" />
-
-    <Button
-        android:id="@+id/btn_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Update"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addexpense" />
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_update" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

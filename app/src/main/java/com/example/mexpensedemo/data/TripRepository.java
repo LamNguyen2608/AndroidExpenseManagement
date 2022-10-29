@@ -1,6 +1,7 @@
 package com.example.mexpensedemo.data;
 
 import android.app.Application;
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,7 +18,6 @@ public class TripRepository {
     public TripRepository(Application application) {
         TripRoomDatabase db = TripRoomDatabase.getDatabase(application);
         tripDao = db.tripDao();
-        recentTrips = tripDao.getRecentTrips();
         allTrips = tripDao.getAllTrips();
     }
     public LiveData<List<Trip>> getAllData() { return allTrips; }
@@ -29,18 +29,19 @@ public class TripRepository {
     public LiveData<Trip> getTrip(int id) {
         return tripDao.getTrip(id);
     }
-
     public void updateTrip(Trip trip){
         TripRoomDatabase.databaseWriteExecutor.execute(() -> tripDao.update(trip));
     }
-
     public void deleteTrip(Trip trip) {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> tripDao.delete(trip));
     }
-
-    public LiveData<List<Trip>>  getRecentTrips(){ return recentTrips; }
-
-    public Float getSum(int trip_id){
-        return tripDao.getSumOfExpenseByTripId(trip_id);
+    public LiveData<List<Pair<Trip, Double>>> getTripAndSum(){
+        return tripDao.getAllTripsWithExpenseSum();
+    }
+    public void resetLocalDatabase() {
+        tripDao.deleteAll();
+    }
+    public void softDelete(int trip_id) {
+        tripDao.softDeleteTripById(trip_id);
     }
 }

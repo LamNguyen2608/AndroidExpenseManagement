@@ -11,6 +11,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Button btn_getStarted;
@@ -21,21 +22,17 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         btn_getStarted = findViewById(R.id.btn_getStarted);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         btn_getStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sp = getApplicationContext().getSharedPreferences("AuthState", Context.MODE_PRIVATE);
-                String userId = sp.getString("userId", "");
-                if(userId != ""){
+                //SharedPreferences sp = getApplicationContext().getSharedPreferences("AuthState", Context.MODE_PRIVATE);
+                if (user != null) {
+                    Log.d("Current user", "===>" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                }else{
-//User is Not logged in, show login Form
                 }
-                try {
-
-                } catch (Exception e) {
-                    Log.d("Null Pointer", "===>" + e.getMessage());
+                else {
+                    Log.d("Null Pointer", "Already logged out");
                     startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                 }
             }
