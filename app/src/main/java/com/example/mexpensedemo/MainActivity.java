@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mexpensedemo.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity{
     protected NavController navController;
     private DrawerLayout drawerLayout;
     private ImageView ham_menu;
+    private FirebaseAuth mauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,26 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        navigationView.getMenu().findItem(R.id.menu_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+                mauth.signOut();
+                return true;
+            }
+        });
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Toast.makeText(MainActivity.this, "Selected item" + item.getItemId(), Toast.LENGTH_LONG).show();
+//                switch (item.getItemId()) {
+//                    case R.id.menu_logout:
+//                        mauth.signOut();
+//                        startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
+//                }
+//                return true;
+//            }
+//        });
 
 
         NavHostFragment navHostFragment;

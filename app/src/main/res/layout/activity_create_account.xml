@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateAccount"
+    android:padding="16dp">
+
+    <ProgressBar
+        android:id="@+id/createact_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/sign_up_form"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/fullname_create"
+            android:hint="Enter your name"
+            android:layout_width="match_parent"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/email_create"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Enter your email (for login)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/password_create"
+            android:hint="Create new password"
+            android:inputType="textPassword"
+            android:layout_marginTop="16dp"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_createaccount"
+            android:text="Create new account"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

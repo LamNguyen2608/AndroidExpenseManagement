@@ -11,10 +11,14 @@
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/drawable/next_icon.xml" value="0.1415" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/drawable/travel_icon.xml" value="0.188" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/font/alfa_slab_one.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_create_account.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_homepage.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_launcher.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_login.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_new_expense.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_new_trip.xml" value="0.22" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/activity_welcome.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/content_main.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/expense_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/MExpenseDemo/app/src/main/res/layout/fragment_edit_trip.xml" value="0.1796875" />
