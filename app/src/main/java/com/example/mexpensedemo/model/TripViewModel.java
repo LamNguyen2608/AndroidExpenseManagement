@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.data.TripRepository;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class TripViewModel extends AndroidViewModel {
     public LiveData<Trip> getTrip(int id) { return repository.getTrip(id);}
     public static void updateTrip(Trip trip) {repository.updateTrip(trip);}
     public static void deleteTrip(Trip trip) {repository.deleteTrip(trip);}
-    public LiveData<List<Pair<Trip, Double>>> getTripSum() {return repository.getTripAndSum();}
+    public LiveData<List<TripDAO.TripWithSumExpenses>> getTripSum() {return repository.getTripAndSum();}
     public void deleteAll() {repository.resetLocalDatabase();}
     public void softDelete(int trip_id) {repository.softDelete(trip_id);}
 }

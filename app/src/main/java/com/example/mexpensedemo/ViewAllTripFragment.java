@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +42,7 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
     //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
     private FloatingActionButton btnAddTrip;
-    private List<Trip> listOfTrips;
+    private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SearchView searchTrip;
@@ -113,9 +114,8 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
                 return true;
             }
         });
-        //recyclerView.setHasFixedSize(true);
 
-        tripViewModel.getAllTrips().observe(getActivity(), trips -> {
+        tripViewModel.getTripSum().observe(getActivity(), trips -> {
             Log.d("trip==>", "==>" + trips);
             listOfTrips = trips;
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -137,32 +137,32 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
     }
 
     private void filterList(String textString) {
-        List<Trip> filterTrips = new ArrayList<>();
+        List<TripDAO.TripWithSumExpenses> filterTrips = new ArrayList<>();
         switch (searchAttr) {
             case "Destination":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getDestination().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getDestination().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             case "Status":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getStatus().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getStatus().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             case "Date":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getDate().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getDate().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             default:
-                for (Trip trip : listOfTrips ){
-                    if (trip.getTrip_name().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getTrip_name().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }

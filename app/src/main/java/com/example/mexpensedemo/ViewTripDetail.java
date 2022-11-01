@@ -32,10 +32,10 @@ public class ViewTripDetail extends Fragment {
     private TextView trip_name;
     private TripViewModel tripViewModel;
     private ExpenseViewModel expenseViewModel;
-    private TextView trip_date;
+    private TextView trip_startdate, trip_enddate;
     private TextView trip_destination;
     private TextView trip_description;
-    private TextView trip_status;
+    private TextView trip_status, trip_sync;
     private TextView trip_isRisk;
     private ImageView back_icon;
     private Button btn_addexpense;
@@ -76,9 +76,11 @@ public class ViewTripDetail extends Fragment {
         expenseViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
                 .getApplication())
                 .create(ExpenseViewModel.class);
+        trip_sync = frag.findViewById(R.id.detail_sync);
         trip_name = frag.findViewById(R.id.detail_tripname);
         trip_destination = frag.findViewById(R.id.detail_destination);
-        trip_date = frag.findViewById(R.id.detail_date);
+        trip_startdate = frag.findViewById(R.id.detail_start_date);
+        trip_enddate = frag.findViewById(R.id.detail_end_date);
         trip_status = frag.findViewById(R.id.detail_status);
         trip_isRisk = frag.findViewById(R.id.detail_isRisk);
         trip_description = frag.findViewById(R.id.detail_description);
@@ -94,8 +96,14 @@ public class ViewTripDetail extends Fragment {
                     if (trip != null) {
                         trip_name.setText(trip.getTrip_name());
                         trip_destination.setText(trip.getDestination());
-                        trip_date.setText(trip.getDate());
+                        trip_startdate.setText(trip.getDateStart());
+                        trip_enddate.setText(trip.getDateEnd());
                         trip_description.setText(trip.getDescription());
+                        if(trip.getAction().equals("R")) {
+                            trip_sync.setText("finished");
+                        } else {
+                            trip_sync.setText("not yet");
+                        }
                         if (trip.getRisk() == true) {
                             trip_isRisk.setText("Yes");
                         } else {

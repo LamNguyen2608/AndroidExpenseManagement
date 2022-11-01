@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mexpensedemo.MutateTripFragment;
 import com.example.mexpensedemo.R;
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 
@@ -20,12 +21,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private List<Trip> listOfTrips;
+    private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private Context context;
     private OnTripClickListener tripClickListener;
     private TripViewModel tripViewModel;
 
-    public void setFilteredTrips(List<Trip> filteredTrips){
+    public void setFilteredTrips(List<TripDAO.TripWithSumExpenses> filteredTrips){
         listOfTrips = filteredTrips;
         notifyDataSetChanged();
     }
@@ -47,15 +48,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             btn_delete = itemView.findViewById(R.id.tripitem_deletetrip);
             total_expense = itemView.findViewById(R.id.txt_trip_total);
 
-            btn_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Trip trip = listOfTrips.get(getAdapterPosition());
-                    FragmentActivity fm = (FragmentActivity) view.getContext();
-                    MutateTripFragment deleteTrip = new MutateTripFragment(trip, false);
-                    deleteTrip.show(fm.getSupportFragmentManager(), "delete trip" );
-                }
-            });
+//            btn_delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    TripDAO.TripWithSumExpenses trip = listOfTrips.get(getAdapterPosition());
+//                    FragmentActivity fm = (FragmentActivity) view.getContext();
+//                    MutateTripFragment deleteTrip = new MutateTripFragment(trip, false);
+//                    deleteTrip.show(fm.getSupportFragmentManager(), "delete trip" );
+//                }
+//            });
 
             this.onTripClickListener = onTripClickListener;
             itemView.setOnClickListener(this);
@@ -67,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(List<Trip> listOfTrips, Context context, OnTripClickListener tripClickListener) {
+    public RecyclerViewAdapter(List<TripDAO.TripWithSumExpenses> listOfTrips, Context context, OnTripClickListener tripClickListener) {
         this.listOfTrips = listOfTrips;
         this.context = context;
         this.tripClickListener = tripClickListener;
@@ -83,11 +84,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Trip trip = Objects.requireNonNull(listOfTrips.get(position));
+        TripDAO.TripWithSumExpenses tripsum = Objects.requireNonNull(listOfTrips.get(position));
+        Trip trip = tripsum.getTrip();
         holder.trip_name.setText(trip.getTrip_name());
         holder.trip_date.setText(trip.getDate());
         holder.trip_destination.setText(trip.getDestination());
         holder.trip_status.setText(trip.getStatus());
+        holder.total_expense.setText(String.valueOf(tripsum.getSumOfExpense()));
     }
 
     @Override

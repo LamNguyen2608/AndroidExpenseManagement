@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".NewTrip">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -66,6 +69,7 @@
         android:background="@drawable/edittextshape"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+        android:drawableRight="@drawable/icon_location"
         android:minHeight="48dp" />
     <TextView
         android:layout_width="match_parent"
@@ -97,10 +101,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
-
     <LinearLayout
-        android:id="@+id/date_button"
-        android:layout_width="150dp"
+        android:id="@+id/start_date_button"
+        android:layout_width="165dp"
         android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/edittextshape"
@@ -110,46 +113,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_calendar_today_24"
-            android:layout_marginStart="15dp"></ImageView>
+            android:layout_marginStart="10dp"/>
         <TextView
-            android:id="@+id/date_view"
+            android:id="@+id/txt_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select a Date"
+            android:text="Select Start Date"
             android:textColor='#29003D'
             android:textSize="16sp"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
             android:fontFamily="@font/geomanist"
-            ></TextView>
-
+            />
     </LinearLayout>
-        <LinearLayout
-            android:id="@+id/time_button"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="25dp"
-            android:background="@drawable/edittextshape"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_access_time_24"
-                android:layout_marginStart="15dp"></ImageView>
-            <TextView
-                android:id="@+id/time_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select Time"
-                android:textColor='#29003D'
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:textStyle="bold"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_next"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            />
+    <LinearLayout
+        android:id="@+id/end_date_button"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/edittextshape"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            android:layout_marginStart="15dp"/>
+        <TextView
+            android:id="@+id/txt_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select End Date"
+            android:textColor='#29003D'
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/geomanist"
+            />
+    </LinearLayout>
 
-                ></TextView>
-        </LinearLayout>
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -186,6 +195,5 @@
         android:padding="@dimen/general_padding"
         android:text="@string/save_text"
 />
-
-
 </LinearLayout>
+</ScrollView>

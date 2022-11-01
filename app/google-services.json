@@ -7,41 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:676244327010:android:1c0fb8e02f59b3e94edf3b",
-        "android_client_info": {
-          "package_name": "com.example.expensetrackingapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "676244327010-rghca6il4r03kpcl0ruk0dlru6r1llsr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAPDQgR_sltopS_1_O35NT_dVvZknjy7MA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "676244327010-rghca6il4r03kpcl0ruk0dlru6r1llsr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:676244327010:android:f723464fdc499dc74edf3b",
         "android_client_info": {
           "package_name": "com.example.mexpensedemo"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "676244327010-q460devi252otdltj95e156svbq5ji50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mexpensedemo",
+            "certificate_hash": "3ed72cb56a2effede62e4eeeb3b1dd704d96d1d3"
+          }
+        },
         {
           "client_id": "676244327010-rghca6il4r03kpcl0ruk0dlru6r1llsr.apps.googleusercontent.com",
           "client_type": 3

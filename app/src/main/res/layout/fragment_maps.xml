@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsFragment"
+    android:gravity="center_horizontal">
+    <fragment
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MapsFragment"
+        />
+    <EditText
+        android:id="@+id/search_location"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/search"
+        android:drawableRight="@drawable/seach_icon"
+        android:layout_margin="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:maxLines="1"
+        android:hint="Search for your location"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_addLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="Choose this location"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom"
+        android:visibility="gone"/>
+
+</FrameLayout>

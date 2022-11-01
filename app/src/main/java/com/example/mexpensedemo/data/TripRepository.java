@@ -10,14 +10,18 @@ import com.example.mexpensedemo.util.TripRoomDatabase;
 
 import java.util.List;
 
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.Dispatchers;
+
 public class TripRepository {
     private TripDAO tripDao;
+    private LiveData<List<TripDAO.TripWithSumExpenses>> allTripSum;
     private LiveData<List<Trip>> allTrips;
-    private LiveData<List<Trip>> recentTrips;
 
     public TripRepository(Application application) {
         TripRoomDatabase db = TripRoomDatabase.getDatabase(application);
         tripDao = db.tripDao();
+        allTripSum = tripDao.getAllTripsWithExpenseSum();
         allTrips = tripDao.getAllTrips();
     }
     public LiveData<List<Trip>> getAllData() { return allTrips; }
@@ -35,7 +39,7 @@ public class TripRepository {
     public void deleteTrip(Trip trip) {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> tripDao.delete(trip));
     }
-    public LiveData<List<Pair<Trip, Double>>> getTripAndSum(){
+    public LiveData<List<TripDAO.TripWithSumExpenses>> getTripAndSum(){
         return tripDao.getAllTripsWithExpenseSum();
     }
     public void resetLocalDatabase() {

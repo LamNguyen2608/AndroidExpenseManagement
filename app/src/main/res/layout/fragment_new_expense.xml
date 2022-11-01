@@ -13,20 +13,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="Expense name"
         android:textColor="#593da4"
         android:textSize="19sp"
         android:textStyle="bold"
         android:fontFamily="@font/geomanist"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="20dp"
         ></TextView>
     <EditText
         android:id="@+id/inp_expname"
         style="@style/formStyle"
         android:layout_height="48dp"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_marginTop="8dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="20dp"
         android:layout_gravity="center_horizontal"
         android:hint="Enter expense name"
         android:textColorHint="#AFAFAF"
@@ -42,12 +44,14 @@
         android:textSize="19sp"
         android:textStyle="bold"
         android:fontFamily="@font/geomanist"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="20dp"
         ></TextView>
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="365dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="20dp"
+        app:boxCornerRadiusBottomStart="6dp"
         android:hint="Type of Expense"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <AutoCompleteTextView
@@ -65,7 +69,7 @@
 
         <LinearLayout
             android:id="@+id/date_button"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/edittextshape"
@@ -77,10 +81,10 @@
                 android:src="@drawable/ic_baseline_calendar_today_24"
                 android:layout_marginStart="15dp"></ImageView>
             <TextView
-                android:id="@+id/date_view"
+                android:id="@+id/inp_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select a Date"
+                android:text="Select Date"
                 android:textColor='#29003D'
                 android:textSize="16sp"
                 android:layout_marginStart="8dp"
@@ -90,8 +94,8 @@
 
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/time_expense_button"
-            android:layout_width="150dp"
+            android:id="@+id/time_button"
+            android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="25dp"
@@ -124,23 +128,40 @@
         android:textSize="19sp"
         android:textStyle="bold"
         android:fontFamily="@font/geomanist"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="20dp"
         />
-    <EditText
-        android:id="@+id/inp_expamt"
-        style="@style/formStyle"
-        android:layout_height="48dp"
-        android:layout_width="370dp"
-        android:layout_marginTop="8dp"
-        android:layout_gravity="center_horizontal"
-        android:textColorHint="#AFAFAF"
-        android:background="@drawable/edittextshape"
-        android:importantForAutofill="no"
-        android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-        android:hint="Enter amount"
-        android:inputType="number"
-        android:padding="@dimen/general_padding"
-        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
+        <EditText
+            android:id="@+id/inp_expamt"
+            style="@style/formStyle"
+            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColorHint="#AFAFAF"
+            android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+            android:background="@drawable/edittextshape"
+            android:importantForAutofill="no"
+            android:text=""
+            android:hint="Enter amount"
+            android:inputType="number"
+            android:padding="@dimen/general_padding"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_convert"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="35dp"
+            android:autofillHints="convert money"
+            android:background="@drawable/icon_convert"/>
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -150,19 +171,20 @@
         android:textSize="19sp"
         android:textStyle="bold"
         android:fontFamily="@font/geomanist"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="20dp"
         ></TextView>
     <EditText
         android:id="@+id/inp_expcmt"
         style="@style/formStyle"
         android:layout_height="48dp"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
         android:textColorHint="#AFAFAF"
         android:background="@drawable/edittextshape"
         android:importantForAutofill="no"
-        android:layout_margin="@dimen/general_padding"
         android:ems="10"
         android:hint="Comment"
         android:inputType="textPersonName"
@@ -171,12 +193,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Expense image"
+        android:text="Expense billing image"
         android:textColor="#593da4"
         android:textSize="19sp"
         android:textStyle="bold"
         android:fontFamily="@font/geomanist"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="20dp"
         ></TextView>
 
     <LinearLayout
@@ -187,7 +209,7 @@
 
         <LinearLayout
             android:id="@+id/camera_button"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/edittextshape"
@@ -211,7 +233,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/gallery_button"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="25dp"

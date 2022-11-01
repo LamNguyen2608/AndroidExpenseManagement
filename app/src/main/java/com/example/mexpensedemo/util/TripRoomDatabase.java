@@ -32,9 +32,10 @@ public abstract class TripRoomDatabase extends RoomDatabase {
             synchronized (TripRoomDatabase.class){
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            TripRoomDatabase.class, "trip_database")
+                            TripRoomDatabase.class, "expense_database")
                             .addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries()
                             .build();
                 }
             }
@@ -51,15 +52,18 @@ public abstract class TripRoomDatabase extends RoomDatabase {
 
                 databaseWriteExecutor.execute(() -> {
                     TripDAO tripDAO = INSTANCE.tripDao();
-                    tripDAO.deleteAll();
+                    Trip trip = new Trip();
+                    trip.setTrip_name("Example 1");
+                    trip.setDate("22/12/2021");
+                    trip.setRisk(true);
+                    trip.setDateEnd("25/12/2021");
+                    trip.setDestination("Melbourne");
 
-                    Trip trip1 = new Trip("Annual Conference", "Tokushima", "22/03/2021", true, "Lamie kawaii");
-                    Trip trip2 = new Trip("On-site for Japan", "Tokyo", "22/05/2022", false, "Sousuke-kun");
-                    Trip trip3 = new Trip("Cultural Exchange", "Melbourne", "12/08/2022", false, "Peter");
-
-                    tripDAO.insert(trip2);
-                    tripDAO.insert(trip1);
-                    tripDAO.insert(trip3);
+                    tripDAO.insert(trip);
+                    trip.setTrip_name("Example 2");
+                    tripDAO.insert(trip);
+                    trip.setTrip_name("Example 3");
+                    tripDAO.insert(trip);
                 });
 
             }

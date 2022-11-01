@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
     private AppBarConfiguration appBarConfiguration;
     //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
-    private List<Trip> listOfTrips;
+    private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private RecyclerView recentTripRecycler;
     private RecyclerView recentExpensesRecycler;
     private ExpenseViewModel expenseViewModel;
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
         recentTripRecycler = frag.findViewById(R.id.rv_recent_trips);
         //recyclerView.setHasFixedSize(true);
 
-        tripViewModel.getRecentTrips().observe(getActivity(), trips -> {
+        tripViewModel.getTripSum().observe(getActivity(), trips -> {
             Log.d("trip==>", "==>" + trips);
             listOfTrips = trips;
             recentTripRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -96,7 +97,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
 
     @Override
     public void onTripClick(int position, View view) {
-        Trip trip = Objects.requireNonNull(listOfTrips.get(position));
+        Trip trip = Objects.requireNonNull(listOfTrips.get(position).getTrip());
         Log.d("click position", "pst" + trip.getId());
         Bundle result_viewall = new Bundle();
         result_viewall.putInt(TRIP_ID, trip.getId());

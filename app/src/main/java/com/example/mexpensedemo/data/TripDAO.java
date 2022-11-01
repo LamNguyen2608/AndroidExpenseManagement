@@ -1,10 +1,13 @@
 package com.example.mexpensedemo.data;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Embedded;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -40,10 +43,25 @@ public interface TripDAO {
     @Delete
     void delete(Trip trip);
 
-    @Query("SELECT Trips.*, SUM(Expenses.amount) " +
-            "FROM Trips LEFT JOIN Expenses " +
-            "ON Trips.trip_id = Expenses.trip_id " +
-            "WHERE Trips.isDeleted = 0 AND Expenses.isDelete = 0 " +
-            "GROUP BY Trips.trip_id, Expenses.amount")
-    LiveData<List<Pair<Trip, Double>>> getAllTripsWithExpenseSum ();
+    @Query("SELECT Trips.*, (IFNULL(SUM(Expenses.amount), 0.0)) as SumOfExpenses " +
+            "FROM Trips LEFT OUTER JOIN Expenses " +
+            "ON Trips.trip_id = Expenses.trip_id AND Expenses.isDelete = 0 " +
+            "GROUP BY Trips.trip_id " +
+            "HAVING Trips.isDeleted = 0")
+    LiveData<List<TripWithSumExpenses>> getAllTripsWithExpenseSum ();
+    class TripWithSumExpenses {
+        @Embedded
+        public Trip trip;
+        @ColumnInfo(name = "SumOfExpenses")
+        public Float SumOfExpense;
+
+        public Trip getTrip() {
+            return trip;
+        }
+
+        public Float getSumOfExpense() {
+            Log.d("Expense sum", "==>" + SumOfExpense);
+            return SumOfExpense;
+        }
+    }
 }
