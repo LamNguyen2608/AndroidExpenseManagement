@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -40,10 +41,10 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
     private Button btnSave;
     DatePickerDialog.OnDateSetListener startdateSetListener, enddateSetListener;
     LinearLayout start_date, end_date;
-    private boolean isEdit;
-    private int trip_id;
     private String ggl_map_api_key = "AIzaSyBSXf6kJlYcM3iMPnXrO3IkMGTKzjxigco";
     private PlacesClient placesClient;
+    private String addressInput;
+    private ImageView btn_openMap;
 
     private TripViewModel tripViewModel;
 
@@ -61,20 +62,22 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
         isRisk = findViewById(R.id.risk_assess);
         enterDesc = findViewById(R.id.enter_description);
         btnSave = findViewById(R.id.btn_save);
+        btn_openMap = findViewById(R.id.btn_map);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(NewTrip.this
                 .getApplication())
                 .create(TripViewModel.class);
 
         //Google MAP API
-        enterDestination.setOnClickListener(new View.OnClickListener() {
+        btn_openMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MapsFragment().show(getSupportFragmentManager(), "Select location");
+                MapsFragment mapsFragment = new MapsFragment();
+                mapsFragment.show(getSupportFragmentManager(), "Select location");
             }
         });
 
 
-        //Set date and calendar
+        //Set start and end date and calendar
         start_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +127,7 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
 
             Trip trip = new Trip();
             trip.setTrip_name(enterTripName.getText().toString());
-            trip.setDestination(enterDestination.getText().toString());
+            trip.setDestination(addressInput);
             trip.setDateStart(enterStartDate.getText().toString());
             trip.setDateEnd(enterEndDate.getText().toString());
             trip.setDescription(enterDesc.getText().toString());
@@ -139,16 +142,12 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
             TripViewModel.insert(trip);
             finish();
         });
-
-
     }
 
-
-
-
-
+    //Get address from chosen location from Maps Fragment
     @Override
     public void onDataPass(Address chosenAddress) {
         enterDestination.setText(chosenAddress.getFeatureName());
+        addressInput = chosenAddress.getFeatureName() + '/' + chosenAddress.getLatitude() + '/' + chosenAddress.getLongitude();
     }
 }

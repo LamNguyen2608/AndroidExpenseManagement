@@ -2,20 +2,16 @@ package com.example.mexpensedemo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,13 +30,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.ExpenseViewModel;
+import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -68,6 +65,7 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
     String[] expenseAttrs = {"Food", "Accommodation", "Transportation", "Equipment", "Outsource", "Other"};
     private Uri image_uri;
     private ImageView img_billing;
+    private ProgressBar progressBar;
 
     public MutateExpenseFragment(int trip_id) {
         this.trip_id = trip_id;
@@ -96,12 +94,13 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
         btn_takepicture = view.findViewById(R.id.camera_button);
         btn_uploadimage = view.findViewById(R.id.gallery_button);
         img_billing = view.findViewById(R.id.expense_image);
+        progressBar = view.findViewById(R.id.expense_progress);
 
         //Set currency converter
         btn_convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CurrencyConverter(view).show(getChildFragmentManager(), "currency converter");
+                new CurrencyConverter(progressBar).show(getChildFragmentManager(), "currency converter");
             }
         });
         
@@ -181,6 +180,8 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
             enterAmount.setText(String.valueOf(expense.getAmount()));
             enterComment.setText(expense.getComment());
             enterType.setText(expense.getExpense_type());
+//
+            Picasso.with(getContext()).load(expense.getImage_uri()).into(img_billing);
         }
 
         switch (mutate) {
@@ -200,11 +201,14 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
 
                                 expense1.setId(expense.getId());
                                 expense1.setTrip_id(expense.getTrip_id());
-                                expense1.setExpense_type(enterType.getText().toString());
+                                expense1.setExpense_type(expenseType);
                                 expense1.setExpense_name(enterExpenseName.getText().toString());
+                                expense1.setDate(enterdate.getText().toString());
                                 expense1.setTime(enterTime.getText().toString());
                                 expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
                                 expense1.setComment(enterComment.getText().toString());
+                                expense1.setImage_uri(String.valueOf(image_uri));
+                                expense1.setAction("U");
 
                                 ExpenseViewModel.updateExpense(expense1);
 
@@ -228,18 +232,9 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
                         .setPositiveButton("delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Expense expense1 = new Expense();
-
-                                expense1.setId(expense.getId());
-                                expense1.setTrip_id(expense.getTrip_id());
-                                expense1.setExpense_type(enterType.getText().toString());
-                                expense1.setExpense_name(enterExpenseName.getText().toString());
-                                expense1.setTime(enterTime.getText().toString());
-                                expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
-                                expense1.setComment(enterComment.getText().toString());
-
-                                ExpenseViewModel.deleteExpense(expense1);
-
+                                expense.setAction("D");
+                                expense.setDelete(true);
+                                ExpenseViewModel.updateExpense(expense);
                             }
                         });
                 break;
@@ -258,11 +253,13 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
                                 Expense expense1 = new Expense();
 
                                 expense1.setTrip_id(trip_id);
-                                expense1.setExpense_type(enterType.getText().toString());
+                                expense1.setExpense_type(expenseType);
                                 expense1.setExpense_name(enterExpenseName.getText().toString());
+                                expense1.setDate(enterdate.getText().toString());
                                 expense1.setTime(enterTime.getText().toString());
                                 expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
                                 expense1.setComment(enterComment.getText().toString());
+                                expense1.setImage_uri(String.valueOf(image_uri));
 
                                 ExpenseViewModel.insert(expense1);
 
@@ -292,6 +289,7 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
         //Detects request codes
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             image_uri = data.getData();
+            Log.d("From gallery", "URI===>" + data.getData());
         }
     }
 
@@ -316,8 +314,10 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
         timePickerDialog.show();
     }
 
+    //Get currency from Currency Converter Fragment
     @Override
     public void sendInput(String input) {
+        progressBar.setVisibility(View.GONE);
         Log.d("==>", "sendInput: got the input: " + input);
         enterAmount.setText(input);
     }

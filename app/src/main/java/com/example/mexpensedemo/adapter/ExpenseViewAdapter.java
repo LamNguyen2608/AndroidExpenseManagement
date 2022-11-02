@@ -84,7 +84,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
         holder.exp_type.setText(expense.getExpense_type());
         holder.exp_time.setText(expense.getTime());
         holder.exp_comment.setText(expense.getComment());
-        holder.exp_amount.setText(Float.toString(expense.getAmount()));
+        holder.exp_amount.setText(String.format("%.2f", expense.getAmount()));
     }
 
     @Override

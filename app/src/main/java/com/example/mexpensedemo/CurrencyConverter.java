@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -46,11 +47,11 @@ public class CurrencyConverter extends AppCompatDialogFragment {
     private String str_from, str_to, endpoint;
     private View expenseView;
     String[] symbols = {"USD","EUR", "VND", "JPY", "KRW", "INR", "CAD", "SGD", "GBP"};
+    private ProgressBar progressBar;
 
 
-    public CurrencyConverter(View view) {
-        // Required empty public constructor
-        expenseView = view;
+    public CurrencyConverter(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     public interface OnInputListener {
@@ -99,6 +100,7 @@ public class CurrencyConverter extends AppCompatDialogFragment {
                 .setPositiveButton("Convert", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        progressBar.setVisibility(View.VISIBLE);
                           endpoint = "https://api.apilayer.com/exchangerates_data/convert?to="
                                 + str_to + "&from="
                                 + str_from +"&amount="

@@ -45,6 +45,8 @@ public class Expense {
 
     private String action;
 
+    private String fireBaseImageLink;
+
     public Expense() {
         isDelete = false;
         action = "R";
@@ -143,5 +145,13 @@ public class Expense {
 
     public void setImage_uri(String image_uri) {
         this.image_uri = image_uri;
+    }
+
+    public String getFireBaseImageLink() {
+        return fireBaseImageLink;
+    }
+
+    public void setFireBaseImageLink(String fireBaseImageLink) {
+        this.fireBaseImageLink = fireBaseImageLink;
     }
 }

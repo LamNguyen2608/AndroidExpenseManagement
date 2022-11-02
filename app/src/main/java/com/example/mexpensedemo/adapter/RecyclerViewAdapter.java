@@ -24,7 +24,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private Context context;
     private OnTripClickListener tripClickListener;
-    private TripViewModel tripViewModel;
 
     public void setFilteredTrips(List<TripDAO.TripWithSumExpenses> filteredTrips){
         listOfTrips = filteredTrips;
@@ -86,11 +85,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TripDAO.TripWithSumExpenses tripsum = Objects.requireNonNull(listOfTrips.get(position));
         Trip trip = tripsum.getTrip();
+        String [] destinationString = trip.getDestination().split("/", 3);
         holder.trip_name.setText(trip.getTrip_name());
         holder.trip_date.setText(trip.getDate());
-        holder.trip_destination.setText(trip.getDestination());
+        holder.trip_destination.setText(destinationString[0]);
         holder.trip_status.setText(trip.getStatus());
-        holder.total_expense.setText(String.valueOf(tripsum.getSumOfExpense()));
+        holder.total_expense.setText(String.format("%.2f", tripsum.getSumOfExpense()));
     }
 
     @Override

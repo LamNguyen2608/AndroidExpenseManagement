@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.location.Address;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,10 +29,11 @@ import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 
-public class MutateTripFragment extends AppCompatDialogFragment {
+public class MutateTripFragment extends AppCompatDialogFragment implements MapsFragment.OnEditListener{
 
     private EditText enterTripName;
     private EditText enterDestination;
@@ -43,6 +46,7 @@ public class MutateTripFragment extends AppCompatDialogFragment {
     private boolean isEdit;
     private TripViewModel tripViewModel;
     private Trip deleteTrip;
+    private LatLng currentLL;
 
     public MutateTripFragment(int trip_id, boolean isEdit) {
         this.trip_id = trip_id;
@@ -125,6 +129,15 @@ public class MutateTripFragment extends AppCompatDialogFragment {
         enterEndDate = view.findViewById(R.id.txt_end_date);
         isRisk = view.findViewById(R.id.edit_tripisRisk);
         enterDesc = view.findViewById(R.id.edit_tripdescription);
+        ImageView btn_openMap = view.findViewById(R.id.btn_edittrip_map);
+
+        btn_openMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapsFragment mapsFragment = new MapsFragment(currentLL);
+                mapsFragment.show(getChildFragmentManager(), "Get Location From Map");
+            }
+        });
 
         //Set date and calendar
         start_date.setOnClickListener(new View.OnClickListener() {
@@ -179,13 +192,17 @@ public class MutateTripFragment extends AppCompatDialogFragment {
             tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
                 Log.d("edit trip" + trip_id, "===>:" + trip);
                 enterTripName.setText(trip.getTrip_name());
-                enterDestination.setText(trip.getDestination());
                 enterStartDate.setText(trip.getDateStart());
                 enterEndDate.setText(trip.getDateEnd());
                 enterDesc.setText(trip.getDescription());
                 if (trip.getRisk() == true) {
                     isRisk.setChecked(true);
                 }
+                String[] addressDetail = trip.getDestination().split("/", 3);
+                currentLL = new LatLng(Float.parseFloat(addressDetail[1]), Float.parseFloat(addressDetail[2]));
+                Log.d("Long", "==>" + Float.parseFloat(addressDetail[1]));
+                Log.d("Lat", "==>" + Float.parseFloat(addressDetail[2]));
+                enterDestination.setText(addressDetail[0]);
             });
         } else {
             tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
@@ -214,4 +231,8 @@ public class MutateTripFragment extends AppCompatDialogFragment {
         return builder.create();
     }
 
+    @Override
+    public void sendNewLocation(Address address) {
+        enterDestination.setText(address.getFeatureName());
+    }
 }

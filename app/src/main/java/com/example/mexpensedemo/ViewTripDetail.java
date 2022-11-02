@@ -94,8 +94,9 @@ public class ViewTripDetail extends Fragment {
                 trip_id = result.getInt(ViewAllTripFragment.TRIP_ID);
                 tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
                     if (trip != null) {
+                        String[] addressDetail = trip.getDestination().split("/", 3);
                         trip_name.setText(trip.getTrip_name());
-                        trip_destination.setText(trip.getDestination());
+                        trip_destination.setText(addressDetail[0]);
                         trip_startdate.setText(trip.getDateStart());
                         trip_enddate.setText(trip.getDateEnd());
                         trip_description.setText(trip.getDescription());

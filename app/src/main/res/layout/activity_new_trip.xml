@@ -56,21 +56,33 @@
         android:fontFamily="@font/geomanist"
         android:layout_marginLeft="28dp"
         ></TextView>
-    <EditText
-        android:id="@+id/enter_destination"
-        style="@style/formStyle"
-        android:layout_width="370dp"
-        android:layout_marginTop="8dp"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:ems="10"
-        android:hint="@string/destination"
-        android:textColorHint="#AFAFAF"
-        android:background="@drawable/edittextshape"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:drawableRight="@drawable/icon_location"
-        android:minHeight="48dp" />
+        android:layout_marginTop="8dp"
+        android:gravity="center">
+        <EditText
+            android:id="@+id/enter_destination"
+            style="@style/formStyle"
+            android:layout_width="370dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="@string/destination"
+            android:textColorHint="#AFAFAF"
+            android:background="@drawable/edittextshape"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+        <ImageView
+            android:id="@+id/btn_map"
+            android:layout_width="30dp"
+            android:layout_height="33dp"
+            android:background="@drawable/icon_location"
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="9dp"/>
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

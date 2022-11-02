@@ -56,10 +56,19 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
     private Address currentAddress;
     passingAddress dataPasser;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private LatLng editLatLng = null;
 
     public MapsFragment() {
-        // Required empty public constructor
     }
+
+    public MapsFragment(LatLng editLatLng) {
+        this.editLatLng = editLatLng;
+    }
+
+    public interface OnEditListener {
+        void sendNewLocation(Address address);
+    }
+    public MapsFragment.OnEditListener onEditListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,10 +118,15 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
         btn_add_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Location", "Clicked");
-                dataPasser.onDataPass(currentAddress);
-                dismiss();
-                //LatLng latLng = new LatLng(37.7688472,-122.4130859);
+                if (editLatLng == null) {
+                    Log.d("Location", "Clicked");
+                    dataPasser.onDataPass(currentAddress);
+                    dismiss();
+                } else {
+                    onEditListener.sendNewLocation(currentAddress);
+                    dismiss();
+                }
+
 
             }
         });
@@ -135,7 +149,10 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        //LatLng latLng = new LatLng(37.7688472,-122.4130859);
+
+        if (editLatLng != null){
+            getLocation(editLatLng);
+        }
     }
 
     @Override
@@ -152,33 +169,30 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dataPasser = (passingAddress) context;
+        if (editLatLng == null) {
+            dataPasser = (passingAddress) context;
+        }
     }
 
     public interface passingAddress {
         public void onDataPass(Address chosenAddress);
     }
 
+    public void onAttachToParentFragment(Fragment fragment)
+    {
+        try
+        {
+            onEditListener = (MapsFragment.OnEditListener) fragment;
+
+        }
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(
+                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+        }
+    }
+
 }
 
 
-// locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-////        Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-////        userLatLong = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-////        Log.d("Current location 2", "====>" + lastLocation.getLatitude());
-////        mMap.clear();
-////        mMap.addMarker(new MarkerOptions().position(userLatLong).title("Your current location"));
-////        mMap.moveCamera(CameraUpdateFactory.newLatLng(userLatLong));
-////
-////        userLatLong = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-////        Log.d("Current location", "====>" + lastLocation.getLatitude());
-//         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//         locationListener = new LocationListener() {
-//@Override
-//public void onLocationChanged(@NonNull Location location) {
-//        userLatLong = new LatLng(location.getLatitude(), location.getLongitude());
-//        mMap.clear();
-//        mMap.addMarker(new MarkerOptions().position(userLatLong).title("Your current location"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(userLatLong));
-//        }
-//        };
+
