@@ -1,29 +1,50 @@
 package com.example.mexpensedemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
+import android.app.DatePickerDialog;
+import android.location.Address;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
-public class NewTrip extends AppCompatActivity {
+import java.util.Arrays;
+import java.util.Calendar;
+
+public class NewTrip extends AppCompatActivity implements MapsFragment.passingAddress {
 
     private EditText enterTripName;
     private EditText enterDestination;
-    private EditText enterDate;
-    private CheckBox isRisk;
+    private TextView enterStartDate, enterEndDate;
+    private Switch isRisk;
     private EditText enterDesc;
     private Button btnSave;
-    private Button btnAddExpense;
-    private boolean isEdit;
-    private int trip_id;
+    DatePickerDialog.OnDateSetListener startdateSetListener, enddateSetListener;
+    LinearLayout start_date, end_date;
+    private String ggl_map_api_key = "AIzaSyBSXf6kJlYcM3iMPnXrO3IkMGTKzjxigco";
+    private PlacesClient placesClient;
+    private String addressInput;
+    private ImageView btn_openMap;
 
     private TripViewModel tripViewModel;
 
@@ -34,15 +55,71 @@ public class NewTrip extends AppCompatActivity {
 
         enterTripName = findViewById(R.id.enter_tripname);
         enterDestination = findViewById(R.id.enter_destination);
-        enterDate = findViewById(R.id.enter_date);
-        isRisk = findViewById(R.id.check_isRisk);
-        enterDesc = findViewById(R.id.enter_desc);
+        start_date = findViewById(R.id.start_date_button);
+        end_date = findViewById(R.id.end_date_button);
+        enterStartDate = findViewById(R.id.txt_start_date);
+        enterEndDate = findViewById(R.id.txt_end_date);
+        isRisk = findViewById(R.id.risk_assess);
+        enterDesc = findViewById(R.id.enter_description);
         btnSave = findViewById(R.id.btn_save);
-        btnAddExpense = findViewById(R.id.btn_addexpense);
-
+        btn_openMap = findViewById(R.id.btn_map);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(NewTrip.this
                 .getApplication())
                 .create(TripViewModel.class);
+
+        //Google MAP API
+        btn_openMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapsFragment mapsFragment = new MapsFragment();
+                mapsFragment.show(getSupportFragmentManager(), "Select location");
+            }
+        });
+
+
+        //Set start and end date and calendar
+        start_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(NewTrip.this, startdateSetListener, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        end_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(NewTrip.this, enddateSetListener, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        startdateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = day + "/" + month + "/" + year;
+                enterStartDate.setText(date);
+            }
+        };
+
+        enddateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = day + "/" + month + "/" + year;
+                enterEndDate.setText(date);
+            }
+        };
 
 
         btnSave.setOnClickListener(view -> {
@@ -50,87 +127,27 @@ public class NewTrip extends AppCompatActivity {
 
             Trip trip = new Trip();
             trip.setTrip_name(enterTripName.getText().toString());
-            trip.setDestination(enterDestination.getText().toString());
-            trip.setDate(enterDate.getText().toString());
+            trip.setDestination(addressInput);
+            trip.setDateStart(enterStartDate.getText().toString());
+            trip.setDateEnd(enterEndDate.getText().toString());
             trip.setDescription(enterDesc.getText().toString());
+            trip.setAction("C");
             if (isRisk.isChecked()) {
                 trip.setRisk(true);
             }
             else {
                 trip.setRisk(false);
             }
-            trip.setStatus("sent");
+            trip.setStatus("requested");
             TripViewModel.insert(trip);
             finish();
-
         });
+    }
 
-        btnAddExpense.setOnClickListener(view -> {
-            Intent addExpense = new Intent(this, NewExpenseFragment.class);
-            startActivity(addExpense);
-        });
-
-        if (getIntent().hasExtra(ViewAllTripFragment.TRIP_ID)) {
-            trip_id = getIntent().getIntExtra(ViewAllTripFragment.TRIP_ID, 0);
-            tripViewModel.getTrip(trip_id).observe(this, trip -> {
-                enterTripName.setText(trip.getTrip_name());
-                enterDestination.setText(trip.getDestination());
-                enterDate.setText(trip.getDate());
-                enterDesc.setText(trip.getDescription());
-                if (trip.getRisk() == true){
-                    isRisk.setChecked(true);
-                }
-
-            });
-            isEdit = true;
-        }
-
-        //Update button
-        Button updateButton = findViewById(R.id.btn_update);
-        updateButton.setOnClickListener(view -> {
-            int id = trip_id;
-            Trip trip = new Trip();
-            trip.setId(id);
-            trip.setTrip_name(enterTripName.getText().toString());
-            trip.setDestination(enterDestination.getText().toString());
-            trip.setDate(enterDate.getText().toString());
-            trip.setDescription(enterDesc.getText().toString());
-            if (isRisk.isChecked()) {
-                trip.setRisk(true);
-            }
-            else {
-                trip.setRisk(false);
-            }
-            TripViewModel.updateTrip(trip);
-            finish();
-        });
-
-        //Delete button
-        Button deleteButton = findViewById(R.id.btn_delete);
-        deleteButton.setOnClickListener(view -> {
-            int id = trip_id;
-            Trip trip = new Trip();
-            trip.setId(id);
-            trip.setTrip_name(enterTripName.getText().toString());
-            trip.setDestination(enterDestination.getText().toString());
-            trip.setDate(enterDate.getText().toString());
-            trip.setDescription(enterDesc.getText().toString());
-            if (isRisk.isChecked()) {
-                trip.setRisk(true);
-            }
-            else {
-                trip.setRisk(false);
-            }
-            TripViewModel.deleteTrip(trip);
-            //finish();
-        });
-
-        if(isEdit){
-            btnSave.setVisibility(View.GONE);
-        } else {
-            updateButton.setVisibility(View.GONE);
-            deleteButton.setVisibility((View.GONE));
-        }
-
+    //Get address from chosen location from Maps Fragment
+    @Override
+    public void onDataPass(Address chosenAddress) {
+        enterDestination.setText(chosenAddress.getFeatureName());
+        addressInput = chosenAddress.getFeatureName() + '/' + chosenAddress.getLatitude() + '/' + chosenAddress.getLongitude();
     }
 }

@@ -3,6 +3,8 @@ package com.example.mexpensedemo.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Trips")
@@ -17,31 +19,32 @@ public class Trip {
     private String trip_name;
 
     @NonNull
-    private String destination;
+    private String destination; //format {city name}/{longtitude}/{latitude}
 
     @NonNull
-    private String date;
+    private String dateStart; //format dd/mm/yyyy
+
+    @NonNull
+    private String dateEnd; //format dd/mm/yyyy
 
     @NonNull
     private Boolean isRisk;
 
+    @NonNull
+    private Boolean isDeleted; //soft delete
+
+    @NonNull
+    private String action; //CRUD for synchronizing with firebase
+
     private String description;
 
     @NonNull
-    @ColumnInfo(defaultValue = "requested")
-    private String status;
+    private String status; //['requested/in review/refunded/denied]
 
     public Trip() {
         this.status = "requested";
-    }
-
-    public Trip(String trip_name, String destination, String date, Boolean isRisk, String description) {
-        this.trip_name = trip_name;
-        this.destination = destination;
-        this.date = date;
-        this.isRisk = isRisk;
-        this.description = description;
-        this.status = "requested";
+        this.isDeleted = false;
+        this.action = "R";
     }
 
     public void setId(int id) {
@@ -57,7 +60,7 @@ public class Trip {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.dateStart = date;
     }
 
     public void setRisk(Boolean risk) {
@@ -81,7 +84,7 @@ public class Trip {
     }
 
     public String getDate() {
-        return date;
+        return dateStart;
     }
 
     public Boolean getRisk() {
@@ -91,10 +94,46 @@ public class Trip {
     public String getDescription() {
         return description;
     }
+    @NonNull
+    public String getDateStart() {
+        return dateStart;
+    }
+
+    @NonNull
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    @NonNull
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    @NonNull
+    public String getAction() {
+        return action;
+    }
+
+    public void setDateStart(@NonNull String dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public void setDateEnd(@NonNull String dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public void setDeleted(@NonNull Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public void setAction(@NonNull String action) {
+        this.action = action;
+    }
 
     public void setStatus(@NonNull String status) {
         this.status = status;
     }
+
 
     @NonNull
     public String getStatus() {

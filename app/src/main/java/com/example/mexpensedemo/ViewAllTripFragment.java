@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,11 +42,11 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
     //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
     private FloatingActionButton btnAddTrip;
-    private List<Trip> listOfTrips;
+    private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SearchView searchTrip;
-    private String searchAttr;
+    private String searchAttr = "name";
     String[] tripAttrs = {"Name","Date", "Destination", "Status"};
     AutoCompleteTextView textOptionsTripAttr;
     ArrayAdapter<String> arrayAdapterTripAttr;
@@ -113,9 +114,8 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
                 return true;
             }
         });
-        //recyclerView.setHasFixedSize(true);
 
-        tripViewModel.getAllTrips().observe(getActivity(), trips -> {
+        tripViewModel.getTripSum().observe(getActivity(), trips -> {
             Log.d("trip==>", "==>" + trips);
             listOfTrips = trips;
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -133,42 +133,45 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
         Bundle result_viewall = new Bundle();
         result_viewall.putInt(TRIP_ID, trip.getId());
         getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
-        Navigation.findNavController(view).navigate(R.id.action_viewAllTripFragment_to_viewTripDetail);
+        ((MainActivity)getActivity()).NavigateToFragment(new ViewTripDetail());
     }
 
     private void filterList(String textString) {
-        List<Trip> filterTrips = new ArrayList<>();
+        List<TripDAO.TripWithSumExpenses> filterTrips = new ArrayList<>();
         switch (searchAttr) {
             case "Destination":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getDestination().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getDestination().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             case "Status":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getStatus().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getStatus().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             case "Date":
-                for (Trip trip : listOfTrips ){
-                    if (trip.getDate().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getDate().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
                 break;
             default:
-                for (Trip trip : listOfTrips ){
-                    if (trip.getTrip_name().toLowerCase().contains(textString.toLowerCase())){
+                for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
+                    if (trip.getTrip().getTrip_name().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }
+                break;
         }
 
         if (filterTrips.isEmpty()){
+            filterTrips.clear();
+            recyclerViewAdapter.setFilteredTrips(filterTrips);
             Toast.makeText(getActivity(),"No trip found!!", Toast.LENGTH_SHORT).show();
         } else {
             recyclerViewAdapter.setFilteredTrips(filterTrips);

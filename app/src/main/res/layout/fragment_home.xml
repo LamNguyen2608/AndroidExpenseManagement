@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -122,6 +119,10 @@
                 android:text="+  Add new trip"/>
         </LinearLayout>
     </FrameLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -138,18 +139,14 @@
             android:layout_marginBottom="15dp"
             android:textSize="25dp"
             android:text="Recent trips"/>
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_trips"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recent_trips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
         <TextView
             android:textColor="@color/black"
             android:layout_width="wrap_content"
@@ -161,18 +158,15 @@
             android:layout_marginBottom="15dp"
             android:textSize="25dp"
             android:text="Recent expenses"/>
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_expenses"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recent_expenses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
     </LinearLayout>
-</LinearLayout>
 </ScrollView>
+</LinearLayout>
+

@@ -12,15 +12,11 @@
     android:background="@color/white"
     tools:context=".ViewTripDetail"
     android:orientation="vertical">
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="206dp"
+        android:layout_height="206dp"
+        android:background="@drawable/melbourne">
 
-            android:src="@drawable/melbourne" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +92,7 @@
                     android:text="Delete this trip"/>
             </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -126,9 +122,27 @@
                 android:fontFamily="@font/geomanist"
                 android:textStyle="bold"
                 android:textColor="#836FDA"
-                android:text="Date:"/>
+                android:text="Start Date:"/>
             <TextView
-                android:id="@+id/detail_date"
+                android:id="@+id/detail_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/geomanist"
+                android:textColor="@color/black"
+                android:text="12/11/2022"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/geomanist"
+                android:textStyle="bold"
+                android:textColor="#836FDA"
+                android:text="End Date:"/>
+            <TextView
+                android:id="@+id/detail_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -161,6 +175,25 @@
                 android:fontFamily="@font/geomanist"
                 android:textColor="@color/black"
                 android:text="requested"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/geomanist"
+                android:textStyle="bold"
+                android:textColor="#836FDA"
+                android:text="Sync:"/>
+            <TextView
+                android:id="@+id/detail_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="@font/geomanist"
+                android:textColor="@color/black"
+                android:text="finished"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"

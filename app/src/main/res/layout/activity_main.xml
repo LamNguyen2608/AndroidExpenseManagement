@@ -29,6 +29,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/menu"></ImageView>
+
                 <ImageView
                     android:id="@+id/btn_back"
                     android:layout_width="40dp"

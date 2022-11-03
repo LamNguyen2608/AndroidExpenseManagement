@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
+import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
@@ -33,7 +35,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
     private AppBarConfiguration appBarConfiguration;
     //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
-    private List<Trip> listOfTrips;
+    private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private RecyclerView recentTripRecycler;
     private RecyclerView recentExpensesRecycler;
     private ExpenseViewModel expenseViewModel;
@@ -59,6 +61,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
                              Bundle savedInstanceState) {
         ImageView goback_icon = getActivity().findViewById(R.id.btn_back);
         goback_icon.setVisibility(View.GONE);
+        ImageView ham_menu = getActivity().findViewById(R.id.ham_menu);
+        ham_menu.setVisibility(View.VISIBLE);
+        TextView heading = getActivity().findViewById(R.id.txt_heading);
+        heading.setText("Expense Management");
         // Inflate the layout for this fragment
         View frag = inflater.inflate(R.layout.fragment_home, container, false);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
@@ -72,7 +78,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
         recentTripRecycler = frag.findViewById(R.id.rv_recent_trips);
         //recyclerView.setHasFixedSize(true);
 
-        tripViewModel.getRecentTrips().observe(getActivity(), trips -> {
+        tripViewModel.getTripSum().observe(getActivity(), trips -> {
             Log.d("trip==>", "==>" + trips);
             listOfTrips = trips;
             recentTripRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -91,7 +97,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
 
     @Override
     public void onTripClick(int position, View view) {
-        Trip trip = Objects.requireNonNull(listOfTrips.get(position));
+        Trip trip = Objects.requireNonNull(listOfTrips.get(position).getTrip());
         Log.d("click position", "pst" + trip.getId());
         Bundle result_viewall = new Bundle();
         result_viewall.putInt(TRIP_ID, trip.getId());

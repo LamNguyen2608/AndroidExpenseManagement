@@ -11,6 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="trip_name_hint">Enter trip name</string>
     <string name="destination">Enter destination</string>
+    <string name="description">Enter description</string>
     <string name="tripdate_hint">Enter the date of your trip</string>
     <string name="newtrip_header">Add your new trip!</string>
     <string name="desc_hint">Enter optional description</string>

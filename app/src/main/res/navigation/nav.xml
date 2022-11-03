@@ -43,4 +43,13 @@
             android:id="@+id/action_viewTripDetail_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/editTripFragment"
+        android:name="com.example.mexpensedemo.MutateTripFragment"
+        android:label="fragment_edit_trip"
+        tools:layout="@layout/fragment_edit_trip" >
+        <action
+            android:id="@+id/action_editTripFragment_to_viewAllTripFragment"
+            app:destination="@id/viewAllTripFragment" />
+    </dialog>
 </navigation>
