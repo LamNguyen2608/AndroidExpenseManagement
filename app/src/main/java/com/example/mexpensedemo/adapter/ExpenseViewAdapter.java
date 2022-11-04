@@ -28,6 +28,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
         public TextView exp_type;
         public TextView exp_time;
         public TextView exp_amount;
+        public TextView exp_date;
         public TextView exp_comment;
         public Button btn_edit;
         public Button btn_delete;
@@ -36,6 +37,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
             super(itemView);
             exp_name = itemView.findViewById(R.id.txt_expensename);
             exp_type = itemView.findViewById(R.id.txt_expensetype);
+            exp_date = itemView.findViewById(R.id.txt_expensedate);
             exp_time = itemView.findViewById(R.id.txt_expensetime);
             exp_amount = itemView.findViewById(R.id.txt_expenseamt);
             exp_comment = itemView.findViewById(R.id.txt_expensecomment);
@@ -84,6 +86,7 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
         holder.exp_type.setText(expense.getExpense_type());
         holder.exp_time.setText(expense.getTime());
         holder.exp_comment.setText(expense.getComment());
+        holder.exp_date.setText(expense.getDate());
         holder.exp_amount.setText(String.format("%.2f", expense.getAmount()));
     }
 

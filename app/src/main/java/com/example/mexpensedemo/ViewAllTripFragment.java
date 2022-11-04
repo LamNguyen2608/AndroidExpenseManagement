@@ -37,11 +37,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter.OnTripClickListener {
-    public static final String TRIP_ID = "trip_id";
-    private AppBarConfiguration appBarConfiguration;
-    //private ActivityMainBinding binding;
     private TripViewModel tripViewModel;
-    private FloatingActionButton btnAddTrip;
     private List<TripDAO.TripWithSumExpenses> listOfTrips;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -128,12 +124,13 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
 
     @Override
     public void onTripClick(int position, View view) {
-        Trip trip = Objects.requireNonNull(tripViewModel.allTrips.getValue().get(position));
-        Log.d("click position", "pst" + trip.getId());
-        Bundle result_viewall = new Bundle();
-        result_viewall.putInt(TRIP_ID, trip.getId());
-        getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
-        ((MainActivity)getActivity()).NavigateToFragment(new ViewTripDetail());
+        Trip trip = Objects.requireNonNull(listOfTrips.get(position).getTrip());
+        ViewTripDetail viewTripDetail = new ViewTripDetail(trip);
+        ((MainActivity) getActivity()).NavigateToFragment(viewTripDetail);
+//        Bundle result_viewall = new Bundle();
+//        result_viewall.putInt(TRIP_ID, trip.getId());
+//        getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
+//        ((MainActivity)getActivity()).NavigateToFragment(new ViewTripDetail());
     }
 
     private void filterList(String textString) {

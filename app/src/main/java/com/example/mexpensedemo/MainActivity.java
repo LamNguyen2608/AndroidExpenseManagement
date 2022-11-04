@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
     public void NavigateBack() {
-        navController.navigateUp();
+        getSupportFragmentManager().popBackStack();
     }
 
     public void NavigateToFragment(Fragment fragment) {

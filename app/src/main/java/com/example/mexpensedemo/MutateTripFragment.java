@@ -42,19 +42,15 @@ public class MutateTripFragment extends AppCompatDialogFragment implements MapsF
     LinearLayout start_date, end_date;
     private Switch isRisk;
     private EditText enterDesc;
-    private int trip_id;
     private boolean isEdit;
     private TripViewModel tripViewModel;
-    private Trip deleteTrip;
+    private Trip trip;
     private LatLng currentLL;
+    private String formatDestination = null;
 
-    public MutateTripFragment(int trip_id, boolean isEdit) {
-        this.trip_id = trip_id;
-        this.isEdit = isEdit;
-    }
 
-    public MutateTripFragment(Trip deletetrip, boolean isEdit) {
-        this.deleteTrip = deletetrip;
+    public MutateTripFragment(Trip trip, boolean isEdit) {
+        this.trip = trip;
         this.isEdit = isEdit;
     }
 
@@ -76,10 +72,11 @@ public class MutateTripFragment extends AppCompatDialogFragment implements MapsF
                     .setPositiveButton("update", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Trip trip = new Trip();
-                            trip.setId(trip_id);
+                            trip.setId(trip.getId());
                             trip.setTrip_name(enterTripName.getText().toString());
-                            trip.setDestination(enterDestination.getText().toString());
+                            if(formatDestination != null) {
+                                trip.setDestination(formatDestination);
+                            }
                             trip.setDateStart(enterStartDate.getText().toString());
                             trip.setDateEnd(enterEndDate.getText().toString());
                             trip.setAction("U");
@@ -111,7 +108,9 @@ public class MutateTripFragment extends AppCompatDialogFragment implements MapsF
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             try {
-                                tripViewModel.softDelete(trip_id);
+                                trip.setAction("D");
+                                trip.setDeleted(true);
+                                TripViewModel.updateTrip(trip);
                                 Toast.makeText(getActivity(),"Delete Successfully!", Toast.LENGTH_SHORT).show();
                             } catch (Throwable error) {
                                 Log.d("delete error", "==>" + error);
@@ -188,38 +187,20 @@ public class MutateTripFragment extends AppCompatDialogFragment implements MapsF
                 .getApplication())
                 .create(TripViewModel.class);
 
-        if (isEdit == true) {
-            tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
-                Log.d("edit trip" + trip_id, "===>:" + trip);
-                enterTripName.setText(trip.getTrip_name());
-                enterStartDate.setText(trip.getDateStart());
-                enterEndDate.setText(trip.getDateEnd());
-                enterDesc.setText(trip.getDescription());
-                if (trip.getRisk() == true) {
-                    isRisk.setChecked(true);
-                }
-                String[] addressDetail = trip.getDestination().split("/", 3);
-                currentLL = new LatLng(Float.parseFloat(addressDetail[1]), Float.parseFloat(addressDetail[2]));
-                Log.d("Long", "==>" + Float.parseFloat(addressDetail[1]));
-                Log.d("Lat", "==>" + Float.parseFloat(addressDetail[2]));
-                enterDestination.setText(addressDetail[0]);
-            });
-        } else {
-            tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
-                if (trip == null) {
-                    dismiss();
-                } else {
-                    deleteTrip = trip;
-                    enterTripName.setText(deleteTrip.getTrip_name());
-                    enterDestination.setText(deleteTrip.getDestination());
-                    enterStartDate.setText(deleteTrip.getDateStart());
-                    enterEndDate.setText(deleteTrip.getDateEnd());
-                    enterDesc.setText(deleteTrip.getDescription());
-                    if (deleteTrip.getRisk() == true) {
-                        isRisk.setChecked(true);
-                    }
-                }
-            });
+        enterTripName.setText(trip.getTrip_name());
+        enterStartDate.setText(trip.getDateStart());
+        enterEndDate.setText(trip.getDateEnd());
+        enterDesc.setText(trip.getDescription());
+        if (trip.getRisk() == true) {
+            isRisk.setChecked(true);
+        }
+        String[] addressDetail = trip.getDestination().split("/", 3);
+        currentLL = new LatLng(Float.parseFloat(addressDetail[1]), Float.parseFloat(addressDetail[2]));
+        Log.d("Long", "==>" + Float.parseFloat(addressDetail[1]));
+        Log.d("Lat", "==>" + Float.parseFloat(addressDetail[2]));
+        enterDestination.setText(addressDetail[0]);
+
+        if(isEdit == false) {
             enterTripName.setEnabled(false);
             enterStartDate.setEnabled(false);
             enterEndDate.setEnabled(false);
@@ -228,11 +209,15 @@ public class MutateTripFragment extends AppCompatDialogFragment implements MapsF
             isRisk.setEnabled(false);
         }
 
+
         return builder.create();
     }
 
+    //Get address from map fragment
     @Override
     public void sendNewLocation(Address address) {
         enterDestination.setText(address.getFeatureName());
+        currentLL = new LatLng(address.getLatitude(), address.getLongitude());
+        formatDestination = address.getFeatureName() + '/' + address.getLatitude() + '/' + address.getLongitude();
     }
 }

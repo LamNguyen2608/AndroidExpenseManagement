@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.mexpensedemo.adapter.ExpenseViewAdapter;
 import com.example.mexpensedemo.model.Expense;
 import com.example.mexpensedemo.model.ExpenseViewModel;
+import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
 
 import java.util.List;
@@ -41,18 +42,15 @@ public class ViewTripDetail extends Fragment {
     private Button btn_addexpense;
     private Button btn_edittrip;
     private Button btn_deletetrip;
-    private int trip_id;
+    private Trip trip;
     private RecyclerView expenseRecycler;
     private ExpenseViewAdapter expenseViewAdapter;
     private LiveData<List<Expense>> listOfExpenses;
     private NavHostFragment navHostFragment;
     private NavController navController;
-    public static ViewTripDetail newInstance() {
-        ViewTripDetail fragment = new ViewTripDetail();
-        return fragment;
-    }
 
-    public ViewTripDetail() {
+    public ViewTripDetail(Trip trip) {
+        this.trip = trip;
     }
 
     @Override
@@ -69,6 +67,7 @@ public class ViewTripDetail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Init value
         View frag = inflater.inflate(R.layout.fragment_view_trip_detail, container, false);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
                 .getApplication())
@@ -88,85 +87,79 @@ public class ViewTripDetail extends Fragment {
         expenseRecycler = frag.findViewById(R.id.rv_expenses);
         btn_edittrip = frag.findViewById(R.id.detail_edittrip);
         btn_deletetrip = frag.findViewById(R.id.detail_deletetrip);
-        getParentFragmentManager().setFragmentResultListener("datafromviewall", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                trip_id = result.getInt(ViewAllTripFragment.TRIP_ID);
-                tripViewModel.getTrip(trip_id).observe(getActivity(), trip -> {
-                    if (trip != null) {
-                        String[] addressDetail = trip.getDestination().split("/", 3);
-                        trip_name.setText(trip.getTrip_name());
-                        trip_destination.setText(addressDetail[0]);
-                        trip_startdate.setText(trip.getDateStart());
-                        trip_enddate.setText(trip.getDateEnd());
-                        trip_description.setText(trip.getDescription());
-                        if(trip.getAction().equals("R")) {
-                            trip_sync.setText("finished");
-                        } else {
-                            trip_sync.setText("not yet");
-                        }
-                        if (trip.getRisk() == true) {
-                            trip_isRisk.setText("Yes");
-                        } else {
-                            trip_isRisk.setText("No");
-                        }
-                    }
-                    else {
-                        ((MainActivity) getActivity()).NavigateToFragment(new ViewAllTripFragment());
-                    }
-                });
-                expenseViewModel.getAllExpensesByTripId(trip_id).observe(getActivity(), expenses -> {
-                    Log.d("trip id==>" + trip_id, "==>" + expenses);
-                    expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                    expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
-                    expenseRecycler.setAdapter(expenseViewAdapter);
-                });
-            }
-        });
+
+        //Check if trip is passed successfully from viewalltrip/homepage
+        if (trip.getDeleted().equals(false)) {
+            tripViewModel.getTrip(trip.getId()).observe(getActivity(), trip -> {
+                String[] addressDetail = trip.getDestination().split("/", 3);
+                trip_name.setText(trip.getTrip_name());
+                trip_destination.setText(addressDetail[0]);
+                trip_startdate.setText(trip.getDateStart());
+                trip_enddate.setText(trip.getDateEnd());
+                trip_description.setText(trip.getDescription());
+                if(trip.getAction().equals("R")) {
+                    trip_sync.setText("finished");
+                } else {
+                    trip_sync.setText("not yet");
+                }
+                if (trip.getRisk() == true) {
+                    trip_isRisk.setText("Yes");
+                } else {
+                    trip_isRisk.setText("No");
+                }
+            });
+            expenseViewModel.getAllExpensesByTripId(trip.getId()).observe(getActivity(), expenses -> {
+                expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
+                expenseRecycler.setAdapter(expenseViewAdapter);
+            });
+        }
+        else {
+            ((MainActivity) getActivity()).NavigateToFragment(new ViewAllTripFragment());
+        }
 
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("click detail back", "clicked");
-                Navigation.findNavController(frag).navigateUp();
+                ((MainActivity) getActivity()).NavigateBack();
             }
         });
         btn_addexpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog(trip_id, "add_expense");
+                openDialog( "add_expense");
             }
         });
 
         btn_edittrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog(trip_id, "edit_trip");
+                openDialog( "edit_trip");
             }
         });
 
         btn_deletetrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog(trip_id, "delete_trip");
+                openDialog("delete_trip");
             }
         });
 
         return frag;
     }
 
-    private void openDialog(int trip_id, String type) {
+    private void openDialog( String type) {
         switch (type){
             case "add_expense":
-                MutateExpenseFragment newExpense = new MutateExpenseFragment(trip_id);
+                MutateExpenseFragment newExpense = new MutateExpenseFragment(trip.getId());
                 newExpense.show(getParentFragmentManager(), "add new expense");
                 break;
             case "edit_trip":
-                MutateTripFragment editTrip = new MutateTripFragment(trip_id, true);
+                MutateTripFragment editTrip = new MutateTripFragment(trip, true);
                 editTrip.show(getParentFragmentManager(), "edit this trip");
                 break;
             case "delete_trip":
-                MutateTripFragment deleteTrip = new MutateTripFragment(trip_id, false);
+                MutateTripFragment deleteTrip = new MutateTripFragment(trip, false);
                 deleteTrip.show(getParentFragmentManager(), "delete this trip");
                 break;
         }

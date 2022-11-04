@@ -98,10 +98,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
     @Override
     public void onTripClick(int position, View view) {
         Trip trip = Objects.requireNonNull(listOfTrips.get(position).getTrip());
-        Log.d("click position", "pst" + trip.getId());
-        Bundle result_viewall = new Bundle();
-        result_viewall.putInt(TRIP_ID, trip.getId());
-        getParentFragmentManager().setFragmentResult("datafromviewall", result_viewall);
-        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_viewTripDetail);
+        ViewTripDetail viewTripDetail = new ViewTripDetail(trip);
+        ((MainActivity) getActivity()).NavigateToFragment(viewTripDetail);
     }
 }

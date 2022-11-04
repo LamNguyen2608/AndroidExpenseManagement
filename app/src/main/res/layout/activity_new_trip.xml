@@ -37,7 +37,7 @@
     <EditText
         android:id="@+id/enter_tripname"
         style="@style/formStyle"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_width="370dp"
         android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
@@ -57,15 +57,15 @@
         android:layout_marginLeft="28dp"
         ></TextView>
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center">
+        android:layout_marginLeft="11dp">
         <EditText
             android:id="@+id/enter_destination"
             style="@style/formStyle"
             android:layout_width="370dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:hint="@string/destination"

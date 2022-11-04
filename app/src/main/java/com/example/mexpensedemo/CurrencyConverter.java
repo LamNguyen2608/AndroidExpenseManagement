@@ -156,7 +156,7 @@ public class CurrencyConverter extends AppCompatDialogFragment {
         catch (ClassCastException e)
         {
             throw new ClassCastException(
-                    fragment.toString() + " must implement OnPlayerSelectionSetListener");
+                    fragment.toString() + " must implement interface");
         }
     }
 }

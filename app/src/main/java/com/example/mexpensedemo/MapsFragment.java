@@ -47,15 +47,11 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
+public class MapsFragment extends AppCompatDialogFragment implements OnMapReadyCallback {
     GoogleMap mMap;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    LatLng latLng;
     private EditText enter_search;
     private Address currentAddress;
     passingAddress dataPasser;
-    private FusedLocationProviderClient fusedLocationProviderClient;
     private LatLng editLatLng = null;
 
     public MapsFragment() {
@@ -71,11 +67,16 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
     public MapsFragment.OnEditListener onEditListener;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onAttachToParentFragment(getParentFragment());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_maps, container, false);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         Button btn_add_location = rootView.findViewById(R.id.btn_addLocation);
         enter_search = rootView.findViewById(R.id.search_location);
@@ -177,6 +178,8 @@ public class MapsFragment extends DialogFragment implements OnMapReadyCallback {
     public interface passingAddress {
         public void onDataPass(Address chosenAddress);
     }
+
+
 
     public void onAttachToParentFragment(Fragment fragment)
     {

@@ -63,7 +63,7 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
     private int hour, minute;
     private Button btn_convert;
     String[] expenseAttrs = {"Food", "Accommodation", "Transportation", "Equipment", "Outsource", "Other"};
-    private Uri image_uri;
+    private Uri image_uri = null;
     private ImageView img_billing;
     private ProgressBar progressBar;
 
@@ -176,11 +176,11 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
 
         if (expense != null){
             enterExpenseName.setText(expense.getExpense_name());
+            enterdate.setText(expense.getDate());
             enterTime.setText(expense.getTime());
             enterAmount.setText(String.valueOf(expense.getAmount()));
             enterComment.setText(expense.getComment());
-            enterType.setText(expense.getExpense_type());
-//
+            enterType.setText(expense.getExpense_type(), false);
             Picasso.with(getContext()).load(expense.getImage_uri()).into(img_billing);
         }
 
@@ -207,7 +207,11 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
                                 expense1.setTime(enterTime.getText().toString());
                                 expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
                                 expense1.setComment(enterComment.getText().toString());
-                                expense1.setImage_uri(String.valueOf(image_uri));
+                                if (image_uri != null) {
+                                    expense1.setImage_uri(String.valueOf(image_uri));
+                                } else {
+                                    expense1.setImage_uri(expense.getImage_uri());
+                                }
                                 expense1.setAction("U");
 
                                 ExpenseViewModel.updateExpense(expense1);
