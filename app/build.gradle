@@ -76,4 +76,7 @@ dependencies {
 
     //Validator
     implementation 'com.basgeekball:awesome-validation:4.3'
+
+    //Graph
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

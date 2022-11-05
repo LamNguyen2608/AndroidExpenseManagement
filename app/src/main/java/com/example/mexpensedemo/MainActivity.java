@@ -92,19 +92,6 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Toast.makeText(MainActivity.this, "Selected item" + item.getItemId(), Toast.LENGTH_LONG).show();
-//                switch (item.getItemId()) {
-//                    case R.id.menu_logout:
-//                        mauth.signOut();
-//                        startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
-//                }
-//                return true;
-//            }
-//        });
-
 
         NavHostFragment navHostFragment;
 

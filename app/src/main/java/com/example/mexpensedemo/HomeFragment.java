@@ -1,12 +1,9 @@
 package com.example.mexpensedemo;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +21,6 @@ import com.example.mexpensedemo.data.TripDAO;
 import com.example.mexpensedemo.model.ExpenseViewModel;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,6 +37,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
     private ExpenseViewModel expenseViewModel;
     private ExpenseViewAdapter expenseViewAdapter;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private Fragment graphs;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,6 +64,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTrip
         heading.setText("Expense Management");
         // Inflate the layout for this fragment
         View frag = inflater.inflate(R.layout.fragment_home, container, false);
+        //graphs = getParentFragmentManager().findFragmentById(R.id.graph_container);
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.graph_container, new MapTripsFragment())
+                .addToBackStack(null).commit();
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
                 .getApplication())
                 .create(TripViewModel.class);
