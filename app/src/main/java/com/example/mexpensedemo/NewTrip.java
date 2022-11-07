@@ -109,6 +109,12 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
                 TextView start_date = (TextView) validationHolder.getView();
                 start_date.setError(validationHolder.getErrMsg());
                 start_date.setTextColor(Color.RED);
+                androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(NewTrip.this);
+                builder1.setTitle("Error!!!");
+                builder1.setMessage("Error: Start date is after End date");
+                builder1.setCancelable(true);
+                androidx.appcompat.app.AlertDialog alert = builder1.create();
+                alert.show();
             }
         }, new CustomErrorReset() {
             @Override
@@ -204,8 +210,6 @@ public class NewTrip extends AppCompatActivity implements MapsFragment.passingAd
                         "Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                AlertDialog alert11 = builder1.create();
-                                alert11.show();
                                 Trip trip = new Trip();
                                 trip.setTrip_name(enterTripName.getText().toString());
                                 trip.setDestination(addressInput);

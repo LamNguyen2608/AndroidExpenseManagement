@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     tools:context=".MutateTripFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,7 +28,7 @@
         <EditText
             android:id="@+id/edit_tripname"
             style="@style/formStyle"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="17dp"
@@ -55,7 +59,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="15dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:ems="10"
                 android:hint="@string/destination"
@@ -91,7 +95,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="15dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:hint="@string/desc_hint"
@@ -186,4 +190,28 @@
                 android:layout_height="70dp"></Switch>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/trip_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:fontFamily="@font/geomanist"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#c6e6ff"
+            android:text="Cancel"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/trip_btn_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="@font/geomanist"
+            android:text="Update"/>
+    </LinearLayout>
+</LinearLayout>

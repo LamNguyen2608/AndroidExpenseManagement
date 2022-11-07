@@ -89,8 +89,9 @@ public class ViewTripDetail extends Fragment {
         btn_deletetrip = frag.findViewById(R.id.detail_deletetrip);
 
         //Check if trip is passed successfully from viewalltrip/homepage
-        if (trip.getDeleted().equals(false)) {
-            tripViewModel.getTrip(trip.getId()).observe(getActivity(), trip -> {
+
+        tripViewModel.getTrip(trip.getId()).observe(getActivity(), trip -> {
+            if (trip != null) {
                 String[] addressDetail = trip.getDestination().split("/", 3);
                 trip_name.setText(trip.getTrip_name());
                 trip_destination.setText(addressDetail[0]);
@@ -107,16 +108,19 @@ public class ViewTripDetail extends Fragment {
                 } else {
                     trip_isRisk.setText("No");
                 }
-            });
-            expenseViewModel.getAllExpensesByTripId(trip.getId()).observe(getActivity(), expenses -> {
-                expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
-                expenseRecycler.setAdapter(expenseViewAdapter);
-            });
-        }
-        else {
-            ((MainActivity) getActivity()).NavigateToFragment(new ViewAllTripFragment());
-        }
+                expenseViewModel.getAllExpensesByTripId(trip.getId()).observe(getActivity(), expenses -> {
+                    expenseRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                    expenseViewAdapter = new ExpenseViewAdapter(expenses, getActivity());
+                    expenseRecycler.setAdapter(expenseViewAdapter);
+
+                });
+            } else {
+                ((MainActivity) getActivity()).NavigateToFragment(new ViewAllTripFragment());
+            }
+        });
+
+
+
 
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override

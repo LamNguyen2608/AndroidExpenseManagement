@@ -59,18 +59,18 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView heading = getActivity().findViewById(R.id.txt_heading);
-        heading.setText("All Trips");
-        ImageView goback_icon = getActivity().findViewById(R.id.btn_back);
-        goback_icon.setVisibility(View.GONE);
-        ImageView ham_menu = getActivity().findViewById(R.id.ham_menu);
-        ham_menu.setVisibility(View.VISIBLE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        TextView heading = getActivity().findViewById(R.id.txt_heading);
+        heading.setText("All Trips");
+        ImageView goback_icon = getActivity().findViewById(R.id.btn_back);
+        goback_icon.setVisibility(View.GONE);
+        ImageView ham_menu = getActivity().findViewById(R.id.ham_menu);
+        ham_menu.setVisibility(View.VISIBLE);
         View frag = inflater.inflate(R.layout.fragment_view_all_trip, container, false);
         tripViewModel = new ViewModelProvider.AndroidViewModelFactory(getActivity()
                 .getApplication())

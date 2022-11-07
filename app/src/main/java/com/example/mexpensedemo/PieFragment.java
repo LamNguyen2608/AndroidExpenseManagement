@@ -120,7 +120,6 @@ public class PieFragment extends Fragment {
             pieChart.setUsePercentValues(true);
             pieChart.getDescription().setEnabled(false);
             pieChart.setCenterText("Total Expenses by Type");
-            pieChart.spin( 500,0,-360f, Easing.EaseInOutQuad);
             pieChart.animateY(2000, Easing.EaseInOutQuad);
             pieChart.setDrawSliceText(false);
             pieChart.animate();

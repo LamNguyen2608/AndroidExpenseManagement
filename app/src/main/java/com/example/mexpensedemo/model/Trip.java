@@ -41,10 +41,13 @@ public class Trip {
     @NonNull
     private String status; //['requested/in review/refunded/denied]
 
+    private Boolean isSync;
+
     public Trip() {
         this.status = "requested";
         this.isDeleted = false;
-        this.action = "R";
+        this.action = "C";
+        this.isSync = false;
     }
 
     public void setId(int id) {
@@ -134,9 +137,16 @@ public class Trip {
         this.status = status;
     }
 
-
     @NonNull
     public String getStatus() {
         return status;
+    }
+
+    public void setSync(Boolean sync) {
+        isSync = sync;
+    }
+
+    public Boolean getSync() {
+        return isSync;
     }
 }

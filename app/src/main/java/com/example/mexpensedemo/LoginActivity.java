@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mexpensedemo.model.TripViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mauth;
     private EditText inp_pwd, inp_email;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TripViewModel tripViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, CreateAccount.class));
             }
         });
+
+        tripViewModel = new ViewModelProvider.AndroidViewModelFactory(LoginActivity.this
+                .getApplication())
+                .create(TripViewModel.class);
     }
 
     private void login() {
@@ -101,6 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
+                            tripViewModel.deleteAll();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
