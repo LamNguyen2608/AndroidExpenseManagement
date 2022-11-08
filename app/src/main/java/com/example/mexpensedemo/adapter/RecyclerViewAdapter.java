@@ -87,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Trip trip = tripsum.getTrip();
         String [] destinationString = trip.getDestination().split("/", 3);
         holder.trip_name.setText(trip.getTrip_name());
-        holder.trip_date.setText(trip.getDate());
+        holder.trip_date.setText(trip.getDateStart());
         holder.trip_destination.setText(destinationString[0]);
         holder.trip_status.setText(trip.getStatus());
         holder.total_expense.setText(String.format("%.2f", tripsum.getSumOfExpense()));

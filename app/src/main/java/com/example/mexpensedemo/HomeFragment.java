@@ -36,9 +36,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.OnTripClickListener{
 

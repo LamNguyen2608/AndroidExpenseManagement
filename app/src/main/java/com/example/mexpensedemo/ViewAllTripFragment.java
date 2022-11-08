@@ -152,7 +152,7 @@ public class ViewAllTripFragment extends Fragment implements RecyclerViewAdapter
                 break;
             case "Date":
                 for (TripDAO.TripWithSumExpenses trip : listOfTrips ){
-                    if (trip.getTrip().getDate().toLowerCase().contains(textString.toLowerCase())){
+                    if (trip.getTrip().getDateStart().toLowerCase().contains(textString.toLowerCase())){
                         filterTrips.add(trip);
                     }
                 }

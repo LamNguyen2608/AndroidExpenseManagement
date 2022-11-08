@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.example.mexpensedemo.adapter.RecyclerViewAdapter;
 import com.example.mexpensedemo.model.Trip;
 import com.example.mexpensedemo.model.TripViewModel;
+import com.example.mexpensedemo.util.BackUpData;
+import com.example.mexpensedemo.util.SQLiteHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
@@ -56,9 +58,11 @@ public class MainActivity extends AppCompatActivity{
     private DrawerLayout drawerLayout;
     private ImageView ham_menu;
     private FirebaseAuth mauth;
+    private BackUpData backUpData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        backUpData = new BackUpData(MainActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -80,14 +84,47 @@ public class MainActivity extends AppCompatActivity{
             public void onNavigationItemReselected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.homeFragment:
+                        Toast.makeText(MainActivity.this, "clicked" + item.getItemId(), Toast.LENGTH_LONG).show();
                         NavigateToFragment(new HomeFragment());
+                        break;
+                    case R.id.sync:
+                        Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
+                        SQLiteHelper sqLiteHelper = new SQLiteHelper();
+                        sqLiteHelper.exportDB();
+                        break;
+                    case R.id.newTrip2:
+                        startActivity(new Intent(MainActivity.this,NewTrip.class));
+                        break;
+                    default:
+                        Toast.makeText(MainActivity.this, "clicked" + item.getItemId(), Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        bottomMenu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.homeFragment:
+                        NavigateToFragment(new HomeFragment());
+                        return true;
+                    case R.id.sync:
+                        Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
+                        backUpData.SyncData();
+                        return true;
+                    case R.id.newTrip2:
+                        startActivity(new Intent(MainActivity.this,NewTrip.class));
+                        return true;
+                    default:
+                        Toast.makeText(MainActivity.this, "clicked" + item.getItemId(), Toast.LENGTH_LONG).show();
+                }
+                return false;
             }
         });
         navigationView.getMenu().findItem(R.id.menu_logout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 mauth.getInstance().signOut();
+                backUpData.ResetData();
                 startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                 return true;
             }
@@ -101,7 +138,7 @@ public class MainActivity extends AppCompatActivity{
         Log.d("log", "===>" + navHostFragment);
         navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navigationView, navController);
-        NavigationUI.setupWithNavController(bottomMenu, navController);
+        //NavigationUI.setupWithNavController(bottomMenu, navController);
 
     }
     public void NavigateBack() {

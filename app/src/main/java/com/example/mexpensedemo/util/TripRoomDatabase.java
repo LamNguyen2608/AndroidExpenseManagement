@@ -33,7 +33,6 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TripRoomDatabase.class, "expense_database")
-                            .addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();
@@ -44,28 +43,28 @@ public abstract class TripRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback sRoomDatabaseCallback =
-        new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-
-                databaseWriteExecutor.execute(() -> {
-                    TripDAO tripDAO = INSTANCE.tripDao();
-                    Trip trip = new Trip();
-                    trip.setTrip_name("Example 1");
-                    trip.setDate("22/12/2021");
-                    trip.setRisk(true);
-                    trip.setDateEnd("25/12/2021");
-                    trip.setDestination("Melbourne");
-
-                    tripDAO.insert(trip);
-                    trip.setTrip_name("Example 2");
-                    tripDAO.insert(trip);
-                    trip.setTrip_name("Example 3");
-                    tripDAO.insert(trip);
-                });
-
-            }
-        };
+//    private static final RoomDatabase.Callback sRoomDatabaseCallback =
+//        new RoomDatabase.Callback() {
+//            @Override
+//            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+//                super.onCreate(db);
+//
+//                databaseWriteExecutor.execute(() -> {
+//                    TripDAO tripDAO = INSTANCE.tripDao();
+//                    Trip trip = new Trip();
+//                    trip.setTrip_name("Example 1");
+//                    trip.setDate("22/12/2021");
+//                    trip.setRisk(true);
+//                    trip.setDateEnd("25/12/2021");
+//                    trip.setDestination("Melbourne");
+//
+//                    tripDAO.insert(trip);
+//                    trip.setTrip_name("Example 2");
+//                    tripDAO.insert(trip);
+//                    trip.setTrip_name("Example 3");
+//                    tripDAO.insert(trip);
+//                });
+//
+//            }
+//        };
 }

@@ -37,4 +37,10 @@ public class ExpenseRepository {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> expenseDao.delete(expense));
     }
     public void softDelete(int expense_id) {expenseDao.softDelete(expense_id);}
+//    public List<Expense> backUp() {
+//        return expenseDao.getAllExpensesForBackUp();
+//    }
+    public LiveData<List<Expense>> backUp() {
+        return expenseDao.getAllExpensesForBackUp();
+    }
 }

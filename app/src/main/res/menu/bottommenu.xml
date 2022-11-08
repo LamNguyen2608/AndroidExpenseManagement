@@ -10,7 +10,7 @@
         android:title="Home"
         android:icon="@drawable/home_nav_icon"/>
     <item
-        android:id="@+id/settingFragment"
+        android:id="@+id/sync"
         android:icon="@drawable/sync_icon"
         android:title="Sync" />
 </menu>

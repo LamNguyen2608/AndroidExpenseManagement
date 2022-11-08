@@ -24,8 +24,16 @@ public interface ExpenseDAO {
     @Query("SELECT * FROM Expenses WHERE Expenses.isDelete = 0")
     LiveData<List<Expense>> getAllExpenses();
 
+//    @Query("SELECT * FROM Expenses")
+//    List<Expense> getAllExpensesForBackUp();
+    @Query("SELECT * FROM Expenses")
+    LiveData<List<Expense>> getAllExpensesForBackUp();
+
     @Query("SELECT * FROM Expenses WHERE Expenses.trip_id = :trip_id AND Expenses.isDelete = 0")
     LiveData<List<Expense>> getAllExpensesByTripId(int trip_id);
+
+    @Query("UPDATE Expenses SET isDelete = 1 WHERE Expenses.trip_id = :trip_id")
+    void cascadeSoftDelete(int trip_id);
 
     @Update
     void update(Expense expense);

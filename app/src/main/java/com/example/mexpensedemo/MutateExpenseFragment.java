@@ -304,7 +304,7 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
                         builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                expense.setAction("D");
+                                expense.setAction("U");
                                 expense.setDelete(true);
                                 ExpenseViewModel.updateExpense(expense);
                                 dialogInterface.cancel();
@@ -362,6 +362,7 @@ public class MutateExpenseFragment extends AppCompatDialogFragment implements Cu
                                     expense1.setAmount(Float.parseFloat(enterAmount.getText().toString()));
                                     expense1.setComment(enterComment.getText().toString());
                                     expense1.setImage_uri(String.valueOf(image_uri));
+                                    expense1.setAction("C");
 
                                     ExpenseViewModel.insert(expense1);
                                     dialogInterface.cancel();

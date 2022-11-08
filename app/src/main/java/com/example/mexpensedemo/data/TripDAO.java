@@ -64,4 +64,9 @@ public interface TripDAO {
             return SumOfExpense;
         }
     }
+
+//    @Query("SELECT * FROM Trips")
+//    List<Trip> getAllTripsForBackUp();
+    @Query("SELECT * FROM Trips")
+    LiveData<List<Trip>> getAllTripsForBackUp();
 }

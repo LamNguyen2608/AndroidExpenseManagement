@@ -47,12 +47,12 @@ public class Expense {
 
     private String fireBaseImageLink;
 
-    private Boolean isSync;
+    //private Boolean isSync;
 
     public Expense() {
         isDelete = false;
         action = "C";
-        isSync = false;
+        //isSync = false;
     }
 
 
@@ -158,11 +158,11 @@ public class Expense {
         this.fireBaseImageLink = fireBaseImageLink;
     }
 
-    public void setSync(Boolean sync) {
-        isSync = sync;
-    }
-
-    public Boolean getSync() {
-        return isSync;
-    }
+//    public void setSync(Boolean sync) {
+//        isSync = sync;
+//    }
+//
+//    public Boolean getSync() {
+//        return isSync;
+//    }
 }

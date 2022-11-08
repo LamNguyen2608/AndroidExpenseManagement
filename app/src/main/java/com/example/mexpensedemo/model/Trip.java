@@ -41,13 +41,13 @@ public class Trip {
     @NonNull
     private String status; //['requested/in review/refunded/denied]
 
-    private Boolean isSync;
+    //private Boolean isSync;
 
     public Trip() {
         this.status = "requested";
         this.isDeleted = false;
         this.action = "C";
-        this.isSync = false;
+        //this.isSync = false;
     }
 
     public void setId(int id) {
@@ -60,10 +60,6 @@ public class Trip {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public void setDate(String date) {
-        this.dateStart = date;
     }
 
     public void setRisk(Boolean risk) {
@@ -84,10 +80,6 @@ public class Trip {
 
     public String getDestination() {
         return destination;
-    }
-
-    public String getDate() {
-        return dateStart;
     }
 
     public Boolean getRisk() {
@@ -142,11 +134,11 @@ public class Trip {
         return status;
     }
 
-    public void setSync(Boolean sync) {
-        isSync = sync;
-    }
-
-    public Boolean getSync() {
-        return isSync;
-    }
+//    public void setSync(Boolean sync) {
+//        isSync = sync;
+//    }
+//
+//    public Boolean getSync() {
+//        return isSync;
+//    }
 }

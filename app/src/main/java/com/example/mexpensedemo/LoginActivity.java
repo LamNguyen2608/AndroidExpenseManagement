@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mexpensedemo.model.TripViewModel;
+import com.example.mexpensedemo.util.BackUpData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                                             } else {
                                                 Toast.makeText(LoginActivity.this, "You're the admin", Toast.LENGTH_LONG).show();
                                             }
+                                            BackUpData backUpData = new BackUpData(LoginActivity.this);
+                                            backUpData.ImportData();
                                         }
                                     });
                             tripViewModel.deleteAll();
